@@ -1,10 +1,15 @@
+import sys
+sys.path.append("../")
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from model import Orders
+
+from models.model import Orders
+
 #app object
 app = FastAPI()
 
-from database import orders_data
+from repository.database import *
+
 
 origins = ['https://localhost:3000']
 
@@ -23,12 +28,19 @@ def read_root():
 
 @app.get("/tables")
 def read_root():
-
     return "hey"
 
-@app.post("/api/orders", response_model=Orders)
+@app.post("/orders", response_model=Orders)
 async def order_details(orders:Orders):
-    response = await orders_data(orders.dict())
+    response = await insert_order(orders.dict())
+    if  response:
+        return response
+    raise HTTPException(400, "Something went wrong")
+
+
+@app.get("/orders")
+async def get_order_details():
+    response = await get_orders()
     if  response:
         return response
     raise HTTPException(400, "Something went wrong")
