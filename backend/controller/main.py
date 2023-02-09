@@ -22,10 +22,6 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
-@app.get("/tables")
-def read_root():
-
-    return "hey"
 
 @app.get("/item")
 async def insert():
