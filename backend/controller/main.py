@@ -5,7 +5,6 @@ from fastapi import FastAPI, HTTPException , Response
 from fastapi.middleware.cors import CORSMiddleware
 import json
 
-
 from models.model import *
 from actions.table_actions import *
 from repository.database import *
@@ -53,7 +52,7 @@ async def get_order_details():
         return response
     raise HTTPException(400, "Something went wrong")
 
-@app.get("/item")
+@app.post("/item")
 async def insert():
     await insert_items()
 
