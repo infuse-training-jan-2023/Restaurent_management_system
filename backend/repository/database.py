@@ -11,9 +11,9 @@ import base64
 #MONGOBD driver
 import motor.motor_asyncio
 
-client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://localhost:27017')
+client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://anas_ahmed:mongo123@restaurant.xw2cat1.mongodb.net/')
 
-database = client.Resturant
+database = client.Restaurant
 order_db = database.orders
 tables_data = database.table
 collection = database.items

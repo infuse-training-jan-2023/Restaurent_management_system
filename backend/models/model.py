@@ -16,6 +16,7 @@ class Orders(BaseModel):
     date: str
 
 class Tables(BaseModel):
+    table_no: int
     capicity: int
     date: str
     from_time: str
