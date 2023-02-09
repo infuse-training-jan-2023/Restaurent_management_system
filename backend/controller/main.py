@@ -7,8 +7,7 @@ import sys
 sys.path.append("../")
 
 from models.model import Tables
-# from actions.table_actions import TableActions
-# from repository.database import TableRepo
+from actions.table_actions import *
 # table_repo = TableRepo
 
 from repository.database import (
@@ -41,10 +40,6 @@ async def get_tables():
     response = await fetch_all_tables()
     return response
 
-@app.get("/avail_tables")
-async def get_avail_tables():
-    response = await fetch_available_tables()
-    return response
 
 @app.post("/tables",response_model=Tables)
 async def post_table(table: Tables):

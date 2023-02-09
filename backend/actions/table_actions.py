@@ -1,19 +1,18 @@
-# from repository.database import TableRepo
+from repository.database import *
 
-# class TableActions:
-#     def __init__(self) -> None:
-#         self.repo = TableRepo
 
-#     def get_tables(self):
-        
-#         cursor = TableRepo.get_tables()
-#         tables = []
-#         for table in cursor:
-#             tables.append({
-#                 'capicity': table['capicity'],
-#                 'columns': table['columns'],
-#             })
-#         # cursor = TableRepo.tables_data.find({})
-#         async for document in cursor:
-#             tables.append(Tables(**document))
-#         return tables
+def get_tables():
+    cursor = get_tables()
+    tables = []
+    for table in cursor:
+        tables.append({
+            tables.append({
+                "capicity" : table[0],
+                "date" : table[1],
+                "from_time" : table[2],
+                "to_time" : table[3],
+                "available" : table[4],
+                "price" : table[5],
+            })
+        })
+    return tables
