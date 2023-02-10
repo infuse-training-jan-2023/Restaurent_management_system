@@ -47,6 +47,10 @@ async def fetch_all_tables():
         tables.append(Tables(**document))
     return tables
 
+async def update_tables(table_no,capicity,date,from_date,to_date,available,price):
+    await tables_data.update_one({'table_no':table_no},{"$set":{'date':date, 'from_date':from_date, 'to_date':to_date}})
+    table = await tables_data.find_one({"table_no":table_no})
+    return table
 
 async def create_table(table):
     document = table
