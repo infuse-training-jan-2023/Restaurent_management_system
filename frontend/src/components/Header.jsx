@@ -7,12 +7,9 @@ import {useState} from 'react'
 const Header = () => {
   const [isShown, setIsShown] = useState(false);
 
-  const handleClick = event => {
-    // 👇️ toggle shown state
-    setIsShown(current => !current);
+  const show_login_modal = () => {
 
-    // 👇️ or simply set it to true
-    // setIsShown(true);
+    setIsShown(current => !current);
   };
   return (
     <nav className="flex fixed w-full top-0 items-center justify-between flex-wrap bg-teal-500 p-6">
@@ -30,7 +27,7 @@ const Header = () => {
           <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
             Reserve Table
           </a>
-          <button className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white " onClick={handleClick}>
+          <button className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white " onClick={show_login_modal}>
             signin
           </button>
           
@@ -63,7 +60,7 @@ const Header = () => {
                   <button className="bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Sign In
                   </button>
-                  <button onClick={handleClick} className="text-sm font-medium text-teal-500 hover:text-teal-400">
+                  <button onClick={show_login_modal} className="text-sm font-medium text-teal-500 hover:text-teal-400">
                     Cancel
                   </button>
                 </div>
