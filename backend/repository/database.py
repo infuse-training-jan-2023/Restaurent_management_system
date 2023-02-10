@@ -42,7 +42,6 @@ async def get_orders():
 async def fetch_all_tables():
     tables = []
     cursor = tables_data.find({})
-
     async for document in cursor:
         tables.append(Tables(**document))
     return tables
