@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class Items(BaseModel):
     item_name : str
@@ -13,7 +14,7 @@ class Orders(BaseModel):
     items: list
     price: int
     status: str
-    date: str
+    date: datetime
 
 class Tables(BaseModel):
     table_no: int

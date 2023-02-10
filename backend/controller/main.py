@@ -42,14 +42,14 @@ async def post_table(table: Tables):
 async def order_details(orders:Orders):
     response = await insert_order(orders.dict())
     if  response:
-        return response
+       return  response
     raise HTTPException(400, "Something went wrong")
 
 @app.get("/orders")
 async def get_order_details():
     response = await get_orders()
     if  response:
-        return response
+        return  response
     raise HTTPException(400, "Something went wrong")
 
 @app.post("/item")

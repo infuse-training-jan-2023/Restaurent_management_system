@@ -11,7 +11,7 @@ import base64
 #MONGOBD driver
 import motor.motor_asyncio
 
-client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://anas_ahmed:mongo123@restaurant.xw2cat1.mongodb.net/')
+client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://anas_ahmed:mongo123@restaurant.xw2cat1.mongodb.net')
 
 database = client.Restaurant
 order_db = database.orders
@@ -20,13 +20,13 @@ collection = database.items
 
 async def insert_order(orders):
     try:
-        date = str(datetime.utcnow())
+        date = datetime.utcnow()
         orders["date"] = date
         orders["status"] = "prep"
         await order_db.insert_one(orders)
         return orders
     except Exception as e:
-        raise Exception("Error: ", e)
+        raise Exception("Error: ", e.__format__)
 
 async def get_orders():
     try:
