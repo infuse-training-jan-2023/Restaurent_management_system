@@ -3,6 +3,7 @@ import Banner from './components/Banner'
 import Footer from './components/Footer'
 import Menutab from './components/Menutab'
 import Header from './components/Header'
+import Feedback from './components/feedback'
 import "./styles/output.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
             <Banner/>
             <Menutab/>
             <Footer/> 
+            <Feedback/>
 
     </div>
   )

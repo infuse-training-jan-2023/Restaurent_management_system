@@ -11,7 +11,8 @@ import base64
 #MONGOBD driver
 import motor.motor_asyncio
 
-client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://harish_kavlekar:mongo123@restaurant.xw2cat1.mongodb.net/')
+# client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://harish_kavlekar:mongo123@restaurant.xw2cat1.mongodb.net/')
+client = motor.motor_asyncio.AsyncIOMotorClient('mongodb://localhost:27017/')
 
 database = client.Restaurant
 order_db = database.orders
@@ -48,7 +49,7 @@ async def fetch_all_tables():
     return tables
 
 async def update_tables(table_no,capicity,date,from_date,to_date,available,price):
-    await tables_data.update_one({'table_no':table_no},{"$set":{'date':date, 'from_date':from_date, 'to_date':to_date}})
+    await tables_data.update_one({'table_no':table_no},{"$set":{'capicity':capicity,'date':date, 'from_time':from_date, 'to_time':to_date,'available':available, 'price':price}})
     table = await tables_data.find_one({"table_no":table_no})
     return table
 
@@ -70,7 +71,7 @@ async def insert_items():
         {"item_name":"samosa", "description": "A fried South Asian pastry with a savoury filling, including ingredients such as spiced potatoes, onions, and peas.","price":20,"quantity":2,"img": samosa,"tag":"snacks","type":"veg"},
         {"item_name":"Vadapav", "description": "The dish consists of a deep fried potato dumpling placed inside a bread bun.","price":30,"quantity":2,"img": vadapav,"tag":"snacks","type":"veg"}
     ]
-    collection.insert_many(values)
+    collection.insert_many(values) 
 
 
 async def fetch_all_items():
