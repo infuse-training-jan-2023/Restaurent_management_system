@@ -14,7 +14,7 @@ const Menutab =()=>
             console.log(res.data);
           })
       }; 
-      const add=({ img, item_name, quantity, price, type}) => {
+      const add=({ img, item_name, description, price, type}) => {
         const cartItem = {
             "user_name":username,
             "items": [
@@ -54,15 +54,10 @@ const Menutab =()=>
 
     return(
     <section className="my-12 max-w-screen-xl mx-auto px-6">
-            
-            <div className="flex items-center justify-center space-x-6">
-                <button className="btn" onClick={() => changeMenuTabs('snacks')}>Breakfast</button>            
-                <button className="btn "onClick={() => changeMenuTabs('Lunch')}>Lunch</button>           
-                <button className="btn " onClick={() => changeMenuTabs('Dinner')}>Dinner{context.context}</button>            
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
-                {foods.filter((item) => menuTab === item.tag).map(item =>( <FoodCard key={item._id} {...item} onClick={()=>add(item)} />
-                ))}
+            <div className="">
+                {/* {foods.filter((item) => menuTab === item.tag).map(item =>( <FoodCard key={item._id} {...item} onClick={()=>add(item)} />
+                ))} */}
+                {username}
             </div>            
     </section>
     )
