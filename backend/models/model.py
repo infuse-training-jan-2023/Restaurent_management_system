@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 
 class Items(BaseModel):
@@ -24,3 +24,20 @@ class Tables(BaseModel):
     to_time: str
     available: bool
     price: int
+
+class AddToCart(BaseModel):
+    user_name: str = Field(...)
+    items: list = Field(...)
+    grand_total: int = Field(...)
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        schema_extra = {
+            "example": {
+                "user_name": "Jane Doe",
+                "items": [{"item_name": "samosa", "quantity":1, "price": 0, "total": 1 * 1}],
+                "grand_total": 0
+            }
+        }
+
