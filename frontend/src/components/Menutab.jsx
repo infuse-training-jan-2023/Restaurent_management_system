@@ -58,9 +58,9 @@ const Menutab =()=>
    <Mycontext.Provider value={{counter:cartlist}}>
     <section className="my-12 max-w-screen-xl mx-auto px-6">
             <div className="flex items-center justify-center space-x-6">
-                <button className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-blue-300 focus:ring-4 transition duration-300 hover:scale-105 " onClick={() => changeMenuTabs('snacks')}>Breakfast</button>
-                <button className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-blue-300 focus:ring-4 transition duration-300 hover:scale-105 "onClick={() => changeMenuTabs('Lunch')}>Lunch</button>
-                <button className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-blue-300 focus:ring-4 transition duration-300 hover:scale-105 " onClick={() => changeMenuTabs('Dinner')}>Dinner</button>
+                <button className="btn" onClick={() => changeMenuTabs('snacks')}>Breakfast</button>            
+                <button className="btn "onClick={() => changeMenuTabs('Lunch')}>Lunch</button>           
+                <button className="btn " onClick={() => changeMenuTabs('Dinner')}>Dinner</button>            
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
                 {foods.filter((item) => menuTab === item.tag).map(item =>( <FoodCard key={item._id} {...item} onClick={()=>{addtocart(item)}}/>
@@ -71,15 +71,14 @@ const Menutab =()=>
     </>   )
 }
 
-const FoodCard = ({ img, item_name, description, price, type, onClick}) => {
-
+const FoodCard = ({ img, item_name, description, price}) => {
     return (
-        <div className="bg-white border border-gray-100 transition  duration-700 hover:shadow-xl hover:scale-105 p-4 rounded-lg relative">
+        <div className="bg-white border border-gray-100 transition  duration-700 hover:shadow-xl hover:scale-105 p-4 rounded-lg">
             <img className="w-64 mx-auto transition duration-300 hover:scale-105" src={`data:image/jpeg;base64,${img}`} alt="" />
             <div className="flex flex-col items-center my-3 space-y-2">
                 <h1 className="text-gray-900 poppins text-lg">{item_name}</h1>
                 <h2 className="text-gray-900 poppins text-2xl font-bold">&#8377;{price}</h2>
-                <button className="bg-primary text-white px-8 py-2 focus:outline-none poppins rounded-full mt-24 transition duration-300 hover:scale-105" onClick={onClick}>Order Now</button>
+                <button className="bg-primary text-white px-8 py-2 focus:outline-none poppins rounded-full mt-24 transition duration-300 hover:scale-105" onClick>Add to cart</button>
             </div>
         </div>
     )

@@ -41,3 +41,7 @@ body::-webkit-scrollbar {
 .border-primary {
   border: 1px solid #f91944;
 }
+
+.btn{
+  @apply text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-blue-300 focus:ring-4 transition duration-300 hover:scale-105
+}
