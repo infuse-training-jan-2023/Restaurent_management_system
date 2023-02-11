@@ -49,14 +49,14 @@ async def update_table(table_no:int,capacity:int,date:str,from_time:str,to_time:
 async def order_details(orders:Orders):
     response = await insert_order(orders.dict())
     if  response:
-        return response
+       return  response
     raise HTTPException(400, "Something went wrong")
 
 @app.get("/orders")
 async def get_order_details():
     response = await get_orders()
     if  response:
-        return response
+        return  response
     raise HTTPException(400, "Something went wrong")
 
 @app.post("/item")
@@ -71,5 +71,23 @@ async def display_items():
     except Exception as e:
         raise Exception('Error occured: ',e)
 
+@app.post("/cart", response_model=dict)
+async def add_to_cart(cart: AddToCart):
+    data = await updatecart(cart.dict())
+    if data:
+        return data
+    raise HTTPException(400, "Could not insert items to cart")
 
+@app.get("/cart")
+async def get_cart():
+    data = await get_all_cart_items()
+    if data:
+        return data
+    raise HTTPException(400, "Could not get items in cart")
 
+@app.get("/cart/{user_name}", response_model=AddToCart)
+async def get_cart(user_name):
+    data = await get_a_cart_item(user_name)
+    if data:
+        return data
+    raise HTTPException(404, "Could not find username")

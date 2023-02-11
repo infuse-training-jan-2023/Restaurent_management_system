@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from datetime import datetime
 
 class Items(BaseModel):
     item_name : str
@@ -13,7 +14,7 @@ class Orders(BaseModel):
     items: list
     price: int
     status: str
-    date: str
+    date: datetime
 
 class Tables(BaseModel):
     table_no: int
@@ -24,30 +25,19 @@ class Tables(BaseModel):
     available: bool
     price: int
 
-# from bson import ObjectId
+class AddToCart(BaseModel):
+    user_name: str = Field(...)
+    items: list = Field(...)
+    grand_total: int = Field(...)
 
-# class Items(BaseModel):
-#     def __init__(self, item_name, description, price, quantity, img, tag, type):
-#         self.item_name = item_name
-#         self.description = description
-#         self.price = price
-#         self.quantity = quantity
-#         self.img = img
-#         self.tag = tag
-#         self.type = type
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        schema_extra = {
+            "example": {
+                "user_name": "Jane Doe",
+                "items": [{"item_name": "samosa", "quantity":1, "price": 0, "total": 1 * 1}],
+                "grand_total": 0
+            }
+        }
 
-# class Orders(BaseModel):
-#     def __init__(self, items, status, date, table_id):
-#         self.items = items
-#         self.status = status
-#         self.date = date
-#         self.table_id = ObjectId(table_id)
-
-# class Tables(BaseModel):
-#     def __init__(self, table_no, capicity, date, from_time, to_time, available):
-#         self.table_no = table_no
-#         self.capicity = capicity
-#         self.date = date
-#         self.from_time = from_time
-#         self.to_time = to_time
-#         self.available = available

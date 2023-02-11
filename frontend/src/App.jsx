@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import Menutab from './components/Menutab'
 import Header from './components/Header'
 import Feedback from './components/feedback'
+import Cart from './components/Cart'
 import "./styles/output.css";
 
 function App() {

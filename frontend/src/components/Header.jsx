@@ -2,15 +2,34 @@ import React from "react";
 import { FaShoppingCart } from 'react-icons/fa';
 import logo from '../assets/logo.jpg';
 import { Avatar, Badge} from 'antd';
-import {useState} from 'react'
+import {useState, useEffect,useContext} from 'react'
+import Mycontext from '../context/cartcont'
 
 const Header = () => {
+
+  const cont=useContext(Mycontext)
   const [isShown, setIsShown] = useState(false);
 
+  const [cartlist, setcartlist] = useState(localStorage.length);
+
+  console.log(cont)
+  const [cartCount, setcartCount] = useState(localStorage.length);
+
+  console.log("Cart list "+localStorage.length)
+  useEffect(() =>
+  {
+
+    // const handleCount=()=>{
+    //   setcartlist(localStorage.length)
+    // }
+    // window.addEventListener('storage', handleCount())
+    // return ()=> window.removeEventListener('storage', handleCount())
+  },[cont])
   const show_login_modal = () => {
 
     setIsShown(current => !current);
   };
+
   return (
     <nav className="flex fixed w-full top-0 items-center justify-between flex-wrap bg-teal-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -30,14 +49,15 @@ const Header = () => {
           <button className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white " onClick={show_login_modal}>
             signin
           </button>
-          
+
         </div>
         <div>
-        <Badge count={1}>
+        <Badge count={cartlist
+        }>
       <button className=" bg-primary px-6 py-3 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-4"><FaShoppingCart/></button></Badge>
         </div>
       </div>
-      {isShown &&       
+      {isShown &&
       <div className="relative">
         <div className="fixed top-0 left-0 right-0 bottom-0 opacity-80 bg-black z-50">
           <div className="flex items-center justify-center h-full mx-auto">
@@ -71,7 +91,7 @@ const Header = () => {
     </div>
       }
     </nav>
-    
+
   );
 };
 
