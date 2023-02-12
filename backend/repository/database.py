@@ -5,7 +5,6 @@ from models.model import *
 import json
 from datetime import datetime
 import base64
-from fastapi import HTTPException
 
 #MONGOBD driver
 import motor.motor_asyncio
@@ -20,9 +19,8 @@ cart_items = database.cart
 
 async def insert_order(orders):
     try:
-        date = datetime.utcnow()
-        orders["date"] = date
         orders["status"] = "prep"
+        orders["date"] = datetime.now()
         await order_db.insert_one(orders)
         return orders
     except Exception as e:
@@ -36,7 +34,7 @@ async def get_orders():
             orders.append(Orders(**items))
         return orders
     except Exception as e:
-        raise Exception("Error: ", e)
+        raise Exception("Error: database connection failure")
 
 async def fetch_all_tables():
     tables = []
@@ -67,7 +65,7 @@ async def insert_items():
         {"item_name":"samosa", "description": "A fried South Asian pastry with a savoury filling, including ingredients such as spiced potatoes, onions, and peas.","price":20,"quantity":2,"img": samosa,"tag":"snacks","type":"veg"},
         {"item_name":"Vadapav", "description": "The dish consists of a deep fried potato dumpling placed inside a bread bun.","price":30,"quantity":2,"img": vadapav,"tag":"snacks","type":"veg"}
     ]
-    collection.insert_many(values) 
+    collection.insert_many(values)
 
 async def fetch_all_items():
     try:
@@ -86,56 +84,56 @@ async def addto_cart(cart_data):
     except Exception as e:
         raise Exception("Error: ", e.__format__)
 
-async def updatecart(data):
+async def update_cart(data):
     try:
-        # print(data["items"])
-        item = data["items"]
         username = data["user_name"]
-        item_name=item[0]["item_name"]
-        quantity=item[0]["quantity"]
-        price=item[0]["price"]
-        total = item[0]["total"]
+        item = data["items"][0]
+        item_name = item["item_name"]
+        quantity = item["quantity"]
+        price = item["price"]
+        total = quantity * price
 
         cart = await cart_items.find_one({"user_name": username})
-        if cart:
-
-            item_exists = False
-            for item in cart["items"]:
-                if item["item_name"] == item_name:
-                    item_exists = True
-                    item["quantity"] = quantity
-                    item["total"] = item["quantity"] * price
-                    break
-            if item_exists:
-                result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"items": cart["items"]}})
-                if result.modified_count == 1:
-                    grand_total = 0
-                    for item in cart["items"]:
-                        grand_total += item["total"]
-                    result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"grand_total": grand_total}})
-                    return {"msg": "Item Updated successfully"}
-                else:
-                    return {"msg": "Item Update failed"}
-            else:
-                new_item = {"item_name": item_name, "quantity": quantity, "price": price, "total": quantity * price}
-                result = await cart_items.update_one({"_id": cart["_id"]}, {"$push": {"items": new_item}})
-                grand_total = cart["grand_total"] + new_item["total"]
-                result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"grand_total": grand_total}})
-
-                if result.modified_count == 1:
-                    return {"msg": "Item added successfully"}
-                else:
-                    return {"msg": "Item add failed"}
-        else:
-            new_cart = {"user_name": username, "items": [{"item_name": item_name, "quantity": quantity, "price": price, "total": quantity * price}], "grand_total": quantity * price}
+        if not cart:
+            # create a new cart if the user doesn't have one
+            new_cart = {
+                "user_name": username,
+                "items": [{"item_name": item_name, "quantity": quantity, "price": price, "total": total}],
+                "grand_total": total
+            }
             result = await cart_items.insert_one(new_cart)
-            # Check if the insert was successful
-        if result.acknowledged:
-            return {"message": "Cart created and item added successfully"}
+            if result.acknowledged:
+                return {"message": "Cart created and item added successfully"}
+            else:
+                raise {"message": "Cart creation and item add failed"}
+
+        item_exists = False
+        for cart_item in cart["items"]:
+            if cart_item["item_name"] == item_name:
+                item_exists = True
+                cart_item["quantity"] = quantity
+                cart_item["total"] = total
+                break
+
+        if item_exists:
+            result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"items": cart["items"]}})
+            if result.modified_count == 1:
+                grand_total = sum([item["total"] for item in cart["items"]])
+                result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"grand_total": grand_total}})
+                return {"msg": "Item updated successfully"}
+            else:
+                return {"msg": "Item update failed"}
         else:
-            raise HTTPException(status_code=500, detail="Cart creation and item add failed")
+            result = await cart_items.update_one({"_id": cart["_id"]}, {"$push": {"items": {"item_name": item_name, "quantity": quantity, "price": price, "total": total}}})
+            if result.modified_count == 1:
+                grand_total = cart["grand_total"] + total
+                result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"grand_total": grand_total}})
+                return {"msg": "Item added successfully"}
+            else:
+                return {"msg": "Item add failed"}
     except Exception as e:
-        raise Exception('Error occured: ',e.__format__)
+        raise Exception("Error: Item Update failed")
+
 
 async def get_all_cart_items():
     try:
@@ -145,7 +143,7 @@ async def get_all_cart_items():
             items_in_cart.append(AddToCart(**document))
         return items_in_cart
     except Exception as e:
-        raise Exception('Error occured: ',e)
+        raise Exception('Error occured: database connection failure')
 
 
 async def get_a_cart_item(user_name):
@@ -154,4 +152,35 @@ async def get_a_cart_item(user_name):
         print(cursor)
         return cursor
     except Exception as e:
-        raise Exception('Error occured: ',e)
+        raise Exception('Error occured: database connection failure')
+
+async def delete_item_in_cart(username, item_name):
+    try:
+        cart = await cart_items.find_one({"user_name": username})
+        if cart:
+            item_exists = False
+            for cart_item in cart["items"]:
+                if cart_item["item_name"] == item_name:
+                    item_exists = True
+                    break
+            if item_exists:
+                result = await cart_items.update_one({"user_name": username}, {"$pull": {"items": {"item_name": item_name}}})
+                if result.modified_count == 1:
+                    items = cart["items"]
+                    items = [item for item in items if item["item_name"] != item_name]
+                    if len(items) == 0:
+                        result = await cart_items.delete_one({"user_name": username})
+                        return {"msg": "Cart deleted as it was empty"}
+                    else:
+                        grand_total = sum([item["total"] for item in items])
+                        result = await cart_items.update_one({"user_name": username}, {"$set": {"items": items, "grand_total": grand_total}})
+                        return {"msg": "Item deleted successfully"}
+                else:
+                    return {"msg": "Item deletion failed"}
+            else:
+                return {"msg": "Item not found in the cart"}
+        else:
+            return {"Error": "User not found"}
+    except Exception as e:
+        raise Exception('Error occured: database connection failure')
+

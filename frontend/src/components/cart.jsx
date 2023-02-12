@@ -6,34 +6,30 @@ import {Username} from '../context/username'
 
 import axios from 'axios'
 const Menutab =()=>
-{
-
-  const [update, setUpdate] = useState(0)
+{   
     const fetchData = async () => {
         axios.get('http://localhost:8000/items')
           .then(res => {
             setFood(res.data)
             console.log(res.data);
           })
-      };
-      const add=({ img, item_name, quantity, price, type}) => {
+      }; 
+      const add=({ img, item_name, description, price, type}) => {
         const cartItem = {
             "user_name":username,
             "items": [
               {
                 "item_name": item_name,
                 "quantity": 1,
-                "price": price,
-                "total": 0,
+                "price": price
               }
             ]
+          
           };
-
+      
           axios.post('http://localhost:8000/cart', cartItem)
             .then(res => {
               console.log(res.data);
-              setUpdate(1)
-
             })
             .catch(error => {
               console.error(error);
@@ -41,11 +37,11 @@ const Menutab =()=>
 
          localStorage.setItem(item_name, price);
         setContext("")
-      }
+      } 
 
       useEffect(() => {
         fetchData()
-      },[update]);
+      },[]);
 
     const changeMenuTabs = (type) => {
         setMenuTab(type)
@@ -58,16 +54,11 @@ const Menutab =()=>
 
     return(
     <section className="my-12 max-w-screen-xl mx-auto px-6">
-
-            <div className="flex items-center justify-center space-x-6">
-                <button className="btn" onClick={() => changeMenuTabs('snacks')}>Breakfast</button>
-                <button className="btn "onClick={() => changeMenuTabs('Lunch')}>Lunch</button>
-                <button className="btn " onClick={() => changeMenuTabs('Dinner')}>Dinner{context.context}</button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
-                {foods.filter((item) => menuTab === item.tag).map(item =>( <FoodCard key={item._id} {...item} onClick={()=>add(item)} />
-                ))}
-            </div>
+            <div className="">
+                {/* {foods.filter((item) => menuTab === item.tag).map(item =>( <FoodCard key={item._id} {...item} onClick={()=>add(item)} />
+                ))} */}
+                {username}
+            </div>            
     </section>
     )
 }
@@ -83,6 +74,6 @@ const FoodCard = ({ img, item_name, description, price,onClick}) => {
             </div>
         </div>
     )
-}
+} 
 
 export default Menutab

@@ -71,9 +71,9 @@ async def display_items():
     except Exception as e:
         raise Exception('Error occured: ',e)
 
-@app.post("/cart", response_model=dict)
+@app.post("/cart")
 async def add_to_cart(cart: AddToCart):
-    data = await updatecart(cart.dict())
+    data = await update_cart(cart.dict())
     if data:
         return data
     raise HTTPException(400, "Could not insert items to cart")
@@ -90,4 +90,11 @@ async def get_cart(user_name):
     data = await get_a_cart_item(user_name)
     if data:
         return data
-    raise HTTPException(404, "Could not find username")
+    raise HTTPException(404, detail="Could not find username")
+
+@app.delete("/cart/{user_name}/{item_name}")
+async def delete_items_in_cart(user_name,item_name):
+    data = await delete_item_in_cart(user_name, item_name)
+    if data:
+        return data
+    raise HTTPException(404, detail=f"Could not find username {user_name}/item in the cart")

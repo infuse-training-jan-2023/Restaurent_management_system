@@ -7,56 +7,61 @@ import {Username} from '../context/username'
 import axios from 'axios'
 const Menutab =()=>
 {
+  const [update, setUpdate] = useState(false);
+  const fetchData = async () =>
+  {
+    axios.get('http://localhost:8000/items')
+      .then(res => {
+        setFood(res.data)
+        console.log(res.data);
+      })
+  };
 
-  const [update, setUpdate] = useState(0)
-    const fetchData = async () => {
-        axios.get('http://localhost:8000/items')
-          .then(res => {
-            setFood(res.data)
+  const add=({ img, item_name, quantity, price, type}) =>
+  {
+        setUpdate(true);
+        const cartItem =
+        {
+        "user_name": username,
+        "items": [
+            {
+            "item_name": item_name,
+            "quantity": 1,
+            "price": price,
+            "total": 0,
+            }],
+        };
+
+        axios.post('http://localhost:8000/cart', cartItem)
+        .then(res =>
+        {
             console.log(res.data);
-          })
-      };
-      const add=({ img, item_name, quantity, price, type}) => {
-        const cartItem = {
-            "user_name":username,
-            "items": [
-              {
-                "item_name": item_name,
-                "quantity": 1,
-                "price": price,
-                "total": 0,
-              }
-            ]
-          };
+        })
+        .catch(error =>
+        {
+            console.error(error);
+        });
 
-          axios.post('http://localhost:8000/cart', cartItem)
-            .then(res => {
-              console.log(res.data);
-              setUpdate(1)
-
-            })
-            .catch(error => {
-              console.error(error);
-            });
-
-         localStorage.setItem(item_name, price);
+        localStorage.setItem(item_name, price);
         setContext("")
-      }
-
-      useEffect(() => {
-        fetchData()
-      },[update]);
-
-    const changeMenuTabs = (type) => {
-        setMenuTab(type)
     }
-    const [menuTab, setMenuTab] = useState('snacks')
-    const [foods ,setFood] = useState([])
-    const [context, setContext] = useContext(Context);
-    const [username, setUsername] = useContext(Username);
 
 
-    return(
+
+  useEffect(() =>
+  {
+    fetchData()
+  },[update]);
+
+  const changeMenuTabs = (type) => {
+      setMenuTab(type)
+  }
+  const [menuTab, setMenuTab] = useState('snacks')
+  const [foods ,setFood] = useState([])
+  const [context, setContext] = useContext(Context);
+  const [username, setUsername] = useContext(Username);
+
+  return(
     <section className="my-12 max-w-screen-xl mx-auto px-6">
 
             <div className="flex items-center justify-center space-x-6">
@@ -69,7 +74,7 @@ const Menutab =()=>
                 ))}
             </div>
     </section>
-    )
+  )
 }
 
 const FoodCard = ({ img, item_name, description, price,onClick}) => {
