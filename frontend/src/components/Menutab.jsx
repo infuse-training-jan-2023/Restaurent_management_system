@@ -38,7 +38,7 @@ const Menutab =()=>
 
 const FoodCard = ({ img, item_name, description, price, type}) => {
     return (
-        <div className="bg-white border border-gray-100 transition  duration-700 hover:shadow-xl hover:scale-105 p-4 rounded-lg relative">
+        <div className="bg-white border border-gray-100 transition  duration-700 hover:shadow-xl hover:scale-105 p-4 rounded-lg ">
             <img className="w-64 mx-auto transition duration-300 hover:scale-105" src={`data:image/jpeg;base64,${img}`} alt="" />
             <div className="flex flex-col items-center my-3 space-y-2">
                 <h1 className="text-gray-900 poppins text-lg">{item_name}</h1>
