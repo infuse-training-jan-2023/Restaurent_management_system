@@ -98,3 +98,10 @@ async def delete_items_in_cart(user_name,item_name):
     if data:
         return data
     raise HTTPException(404, detail=f"Could not find username {user_name}/item in the cart")
+
+@app.delete("/checkout/{user_name}")
+async def delete_all_items_in_cart(user_name):
+    data = await delete_cart(user_name)
+    if data:
+        return data
+    raise HTTPException(400, "No Items in the Cart to be deleted")

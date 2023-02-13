@@ -16,7 +16,7 @@ class Orders(BaseModel):
     status: str
     date: datetime
 
-class OrderList(BaseModel):
+class OrderHistory(BaseModel):
     user_name: str = Field(...)
     items: list = Field(...)
     grand_total: int = Field(...)
@@ -47,6 +47,7 @@ class Item(BaseModel):
     price: int
     total: int = None
 
+# todo
 class AddToCart(BaseModel):
     user_name: str = Field(...)
     items: list[Item] = Field(...)
@@ -58,8 +59,6 @@ class AddToCart(BaseModel):
         schema_extra = {
             "example": {
                 "user_name": "Jane Doe",
-                "items": [{"item_name": "samosa", "quantity":1, "price": 0, "total": 0}],
-                "grand_total": 0
+                "items": [{"item_name": "samosa", "quantity":1, "price": 0}]
             }
         }
-

@@ -16,6 +16,7 @@ order_db = database.orders
 tables_data = database.table
 collection = database.items
 cart_items = database.cart
+order_history= database.orderhistory
 
 async def insert_order(orders):
     try:
@@ -184,3 +185,21 @@ async def delete_item_in_cart(username, item_name):
     except Exception as e:
         raise Exception('Error occured: database connection failure')
 
+
+async def insert_order_history(data):
+    try:
+        await order_history.insert_one(data)
+        return {"Success": "Order history inserted successfully"}
+    except Exception as e:
+        raise Exception('Error occured: database connection failure')
+
+async def delete_cart(user_name):
+    try:
+        cart = await cart_items.find_one({"user_name": user_name})
+        if cart:
+            print(cart)
+            await insert_order_history(cart)
+            await cart_items.delete_one({"user_name": user_name})
+            return {"msg": "user deleted successfully"}
+    except:
+        return {"Error": "User not found"}
