@@ -2,6 +2,9 @@ import sys
 sys.path.append("../")
 
 from models.model import *
+from models.item import *
+from models.cart import *
+from models.table import Tables
 import json
 from datetime import datetime
 import base64
@@ -10,33 +13,13 @@ from fastapi import HTTPException
 #MONGOBD driver
 import motor.motor_asyncio
 
-client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://anis:anis%40123@mydb.tpgkpds.mongodb.net')
+client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://dinesh_gawas:mongo123@restaurant.xw2cat1.mongodb.net/')
 
 database = client.Restaurant
 order_db = database.orders
 tables_data = database.table
 collection = database.items
 cart_items = database.cart
-
-async def insert_order(orders):
-    try:
-        date = datetime.utcnow()
-        orders["date"] = date
-        orders["status"] = "prep"
-        await order_db.insert_one(orders)
-        return orders
-    except Exception as e:
-        raise Exception("Error: ", e.__format__)
-
-async def get_orders():
-    try:
-        orders = []
-        result = order_db.find({})
-        async for items in result:
-            orders.append(Orders(**items))
-        return orders
-    except Exception as e:
-        raise Exception("Error: ", e)
 
 async def fetch_all_tables():
     tables = []
@@ -45,8 +28,8 @@ async def fetch_all_tables():
         tables.append(Tables(**document))
     return tables
 
-async def update_tables(table_no,capicity,date,from_date,to_date,available,price):
-    await tables_data.update_one({'table_no':table_no},{"$set":{'capicity':capicity,'date':date, 'from_time':from_date, 'to_time':to_date,'available':available, 'price':price}})
+async def update_tables(table_no,capicity,price,date,slot):
+    await tables_data.update_one({'table_no':table_no},{"$set":{'capicity':capicity,'price':price,'date':date,'slot':slot}})
     table = await tables_data.find_one({"table_no":table_no})
     return table
 
@@ -142,7 +125,7 @@ async def get_all_cart_items():
         items_in_cart = []
         cursor = cart_items.find({})
         async for document in cursor:
-            items_in_cart.append(AddToCart(**document))
+            items_in_cart.append(Cart(**document))
         return items_in_cart
     except Exception as e:
         raise Exception('Error occured: ',e)

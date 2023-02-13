@@ -22,8 +22,6 @@ async def test_invalid_insert_order(mocker):
     with pytest.raises(Exception) as e:
       await insert_order({"items": ["string"], "price": 0, "status": "prep"})
 
-
-
 @pytest.mark.asyncio
 async def test_invalid_data_insert_order(mocker):
     mock = mocker.patch('repository.database.insert_order', return_value = order_data)

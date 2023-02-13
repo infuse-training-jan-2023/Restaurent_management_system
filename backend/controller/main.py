@@ -5,7 +5,9 @@ from fastapi import FastAPI, HTTPException , Response
 from fastapi.middleware.cors import CORSMiddleware
 import json
 
-from models.model import *
+from models.cart import *
+from models.table import *
+from models.item import *
 from actions.table_actions import *
 from repository.database import *
 
@@ -39,18 +41,11 @@ async def post_table(table: Tables):
     raise HTTPException(400, "Could not create table")
 
 @app.put("/tables/{table_no}",response_model=Tables)
-async def update_table(table_no:int,capacity:int,date:str,from_time:str,to_time:str,available:bool,price:int):
-    response = await update_tables(table_no,capacity,date,from_time,to_time,available,price)
+async def update_table(table_no:int,capacity:int,price:int,date:str,slot:str):
+    response = await update_tables(table_no,capacity,price,date,slot)
     if response:
         return response
     raise HTTPException(404, f"no table with table no{table_no}")
-
-@app.post("/orders", response_model=Orders)
-async def order_details(orders:Orders):
-    response = await insert_order(orders.dict())
-    if  response:
-       return  response
-    raise HTTPException(400, "Something went wrong")
 
 @app.get("/orders")
 async def get_order_details():
@@ -72,7 +67,7 @@ async def display_items():
         raise Exception('Error occured: ',e)
 
 @app.post("/cart", response_model=dict)
-async def add_to_cart(cart: AddToCart):
+async def add_to_cart(cart: Cart):
     data = await updatecart(cart.dict())
     if data:
         return data
@@ -85,7 +80,7 @@ async def get_cart():
         return data
     raise HTTPException(400, "Could not get items in cart")
 
-@app.get("/cart/{user_name}", response_model=AddToCart)
+@app.get("/cart/{user_name}", response_model=Cart)
 async def get_cart(user_name):
     data = await get_a_cart_item(user_name)
     if data:
