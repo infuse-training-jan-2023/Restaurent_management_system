@@ -138,3 +138,33 @@ async def get_a_cart_item(user_name):
         return cursor
     except Exception as e:
         raise Exception('Error occured: ',e)
+    
+async def delete_item_in_cart(username, item_name):
+    try:
+        cart = await cart_items.find_one({"user_name": username})
+        if cart:
+            item_exists = False
+            for cart_item in cart["items"]:
+                if cart_item["item_name"] == item_name:
+                    item_exists = True
+                    break
+            if item_exists:
+                result = await cart_items.update_one({"user_name": username}, {"$pull": {"items": {"item_name": item_name}}})
+                if result.modified_count == 1:
+                    items = cart["items"]
+                    items = [item for item in items if item["item_name"] != item_name]
+                    if len(items) == 0:
+                        result = await cart_items.delete_one({"user_name": username})
+                        return {"msg": "Cart deleted as it was empty"}
+                    else:
+                        grand_total = sum([item["total"] for item in items])
+                        result = await cart_items.update_one({"user_name": username}, {"$set": {"items": items, "grand_total": grand_total}})
+                        return {"msg": "Item deleted successfully"}
+                else:
+                    return {"msg": "Item deletion failed"}
+            else:
+                return {"msg": "Item not found in the cart"}
+        else:
+            return {"Error": "User not found"}
+    except Exception as e:
+        raise Exception('Error occured: database connection failure')

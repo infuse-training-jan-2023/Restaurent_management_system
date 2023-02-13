@@ -1,18 +1,47 @@
 import './App.css'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import Banner from './components/Banner'
 import Footer from './components/Footer'
 import Menutab from './components/Menutab'
 import Header from './components/Header'
-import {Context} from './context/usercontext copy'
-import { Username } from './context/username'
+import {Context} from './context/CartContext'
+import { AuthContext } from './context/AuthContext';
+import OrderMsg from './components/OrderSuccess'
+
 import "./styles/output.css";
+import { Route, Routes , Link} from 'react-router-dom';
 
 function App() {
+  const storedUser = localStorage.getItem('user');
+  const [user, setUser] = useState(JSON.parse(storedUser));
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+
+  }, []);
+
+
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(user));
+  }, [user]);
+
+  const signIn = user => {
+    setUser(user);
+  };
+
+  const signOut = () => {
+    setUser(null);
+  };
+
   const [context, setContext] = useState(localStorage.length);
   const [username, setUsername] = useState('');
   return (
-    <Username.Provider value={[username,setUsername]}>
+    <>
+        <AuthContext.Provider value={{ user, signIn, signOut }}>
+
     <Context.Provider value={[context, setContext]}>
     <div className="App">
 
@@ -20,10 +49,13 @@ function App() {
             <Banner/>
             <Menutab/>
             <Footer/> 
+            
 
     </div>
     </Context.Provider>
-    </Username.Provider>
+    </AuthContext.Provider>
+
+    </>
   )
 }
 

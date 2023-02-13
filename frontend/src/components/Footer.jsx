@@ -2,10 +2,9 @@ import React from 'react'
 
 const Footer = () => {
     return (
-      
         <section className="w-full bg-yellow-50">
             
-<footer className="bg-white dark:bg-gray-900">
+<footer className="bg-white border-t-2 border-black dark:bg-gray-900">
     <div className="grid grid-cols-2 gap-8 px-6 py-8 md:grid-cols-3">
         <div>
             <h2 className="mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Company</h2>
