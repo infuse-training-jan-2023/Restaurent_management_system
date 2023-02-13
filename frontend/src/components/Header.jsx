@@ -23,10 +23,26 @@ const [context, setContext] = useContext(Context);
 const { user, signIn, signOut } = useContext(AuthContext);
 const [open, setOpen] = useState(false);
 const [ordermsg ,setOrdermsg] = useState(false);
+const [total , settotal]=useState('');
+const [showorder , setShoworder] = useState(false);
 
 const showDrawer = () => {
 setOpen(true);
 };
+
+const createOrder = () => {
+    axios.delete(`http://localhost:8000/checkout/${user}`)
+    .then(res => {
+    console(res.data.items);
+    })
+    .catch(error => {
+    console.error(error);
+    })
+    setCartItems([])
+    setCartSize(0)
+    setShoworder(false)
+
+}
 const deleteCartItem =(deleteItem)=>
 {
 const modifiedData =cartItems.filter(item => item !== deleteItem);
@@ -41,11 +57,11 @@ console.error(error);
 };
 const showOrderStatus =() =>
 {
+setShoworder(true)
 setCartSize(0)
 setOrdermsg(true)
 onClose()
 setCartItems([])
-window.location.reload(true);
 
 }  
 const onClose = () => {
@@ -67,7 +83,7 @@ setIsShown(current => !current)
 const log_out= () => {
 signOut();
 setCartSize(0);
-
+window.location.reload(true);
 }
 const log_in = event => {
 event.preventDefault();
@@ -79,6 +95,8 @@ if (user) {
 axios.get(`http://localhost:8000/cart/${user}`)
 .then(res => {
 setCartItems(res.data.items);
+settotal(res.data.grand_total)
+console.log(res.data)
 setCartSize(res.data.items.length);
 })
 .catch(error => {
@@ -161,7 +179,6 @@ Cancel
 </div>
 
 }
-{/* {ordermsg && <><OrderMsg {ordermsg}/></>} */}
 
 {showCart && <>
 <Drawer   width={600}  placement="right" onClose={onClose} open={open}>
@@ -177,14 +194,18 @@ Cancel
 </div>
 {
 cartItems.map((item, index) => (
-<CartItem key={index} item={item}  onClick={()=>deleteCartItem(item)} />
+<CartItem key={index} item={item}  onClick={()=>deleteCartItem(item)}/>
 ))}
 </div>     
-<div>
-<button onClick={showOrderStatus}>Checkout</button> 
+<div>{cartsize>0?
+<button className="bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={showOrderStatus}>Checkout</button>:
+<div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">No item in cart</div> }
 </div>    
 </Drawer>
 </>}
+{showorder && <OrderMsg onClick={()=>createOrder() }/>
+
+}
 </nav>
 </Context.Provider>
 </CartContext.Provider>

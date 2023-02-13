@@ -16,6 +16,8 @@ order_db = database.orders
 tables_data = database.table
 collection = database.items
 cart_items = database.cart
+order_history= database.orderhistory
+
 
 async def insert_order(orders):
     try:
@@ -82,42 +84,91 @@ async def addto_cart(cart_data):
 
 async def updatecart(data):
     try:
-        print(data["items"])
-        item = data["items"]
         username = data["user_name"]
-        item_name=item[0]["item_name"]
-        quantity=item[0]["quantity"]
-        price=item[0]["price"]
+        item = data["items"][0]
+        item_name = item["item_name"]
+        quantity = item["quantity"]
+        price = item["price"]
+        total = quantity * price
 
         cart = await cart_items.find_one({"user_name": username})
-        if cart:
-
-            item_exists = False
-            for item in cart["items"]:
-                if item["item_name"] == item_name:
-                    item_exists = True
-                    item["quantity"] = quantity
-                    break
-            if item_exists:
-                result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"items": cart["items"]}})
-                # data = await cart_items.find_one({"user_name": username})
-                return data
-            else:
-                new_item = {"item_name": item_name, "quantity": quantity, "price": price}
-                result = await cart_items.update_one({"_id": cart["_id"]}, {"$push": {"items": new_item}})
-                if result.modified_count == 1:
-                    return {"msg": "Item added successfully"}
-                else:
-                    return {"msg": "Item add failed"}
-        else:
-            new_cart = {"user_name": username, "items": [{"item_name": item_name, "quantity": quantity, "price": price}]}
+        if not cart:
+            # create a new cart if the user doesn't have one
+            new_cart = {
+                "user_name": username,
+                "items": [{"item_name": item_name, "quantity": quantity, "price": price, "total": total}],
+                "grand_total": total
+            }
             result = await cart_items.insert_one(new_cart)
-            if result.modified_count == 1:
-                    return {"msg": "Item added successfully"}
+            if result.acknowledged:
+                return {"message": "Cart created and item added successfully"}
             else:
-                    return {"msg": "Item add failed"}
+                raise {"message": "Cart creation and item add failed"}
+
+        item_exists = False
+        for cart_item in cart["items"]:
+            if cart_item["item_name"] == item_name:
+                item_exists = True
+                cart_item["quantity"] = quantity
+                cart_item["total"] = total
+                break
+
+        if item_exists:
+            result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"items": cart["items"]}})
+            if result.modified_count == 1:
+                grand_total = sum([item["total"] for item in cart["items"]])
+                result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"grand_total": grand_total}})
+                return {"msg": "Item updated successfully"}
+            else:
+                return {"msg": "Item update failed"}
+        else:
+            result = await cart_items.update_one({"_id": cart["_id"]}, {"$push": {"items": {"item_name": item_name, "quantity": quantity, "price": price, "total": total}}})
+            if result.modified_count == 1:
+                grand_total = cart["grand_total"] + total
+                result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"grand_total": grand_total}})
+                return {"msg": "Item added successfully"}
+            else:
+                return {"msg": "Item add failed"}
     except Exception as e:
-        raise Exception('Error occured: ',e.__format__)
+        raise Exception("Error: Item Update failed")
+# async def updatecart(data):
+#     try:
+#         print(data["items"])
+#         item = data["items"]
+#         username = data["user_name"]
+#         item_name=item[0]["item_name"]
+#         quantity=item[0]["quantity"]
+#         price=item[0]["price"]
+#         print(quantity)
+#         cart = await cart_items.find_one({"user_name": username})
+#         if cart:
+
+#             item_exists = False
+#             for item in cart["items"]:
+#                 if item["item_name"] == item_name:
+#                     item_exists = True
+#                     item["quantity"] = quantity
+#                     break
+#             if item_exists:
+#                 result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"items": cart["items"]}})
+#                 # data = await cart_items.find_one({"user_name": username})
+#                 return data
+#             else:
+#                 new_item = {"item_name": item_name, "quantity": quantity, "price": price}
+#                 result = await cart_items.update_one({"_id": cart["_id"]}, {"$push": {"items": new_item}})
+#                 if result.modified_count == 1:
+#                     return {"msg": "Item added successfully"}
+#                 else:
+#                     return {"msg": "Item add failed"}
+#         else:
+#             new_cart = {"user_name": username, "items": [{"item_name": item_name, "quantity": quantity, "price": price}]}
+#             result = await cart_items.insert_one(new_cart)
+#             if result.modified_count == 1:
+#                     return {"msg": "Item added successfully"}
+#             else:
+#                     return {"msg": "Item add failed"}
+#     except Exception as e:
+#         raise Exception('Error occured: ',e.__format__)
 
 
 
@@ -168,3 +219,21 @@ async def delete_item_in_cart(username, item_name):
             return {"Error": "User not found"}
     except Exception as e:
         raise Exception('Error occured: database connection failure')
+    
+async def insert_order_history(data):
+    try:
+        await order_history.insert_one(data)
+        return {"Success": "Order history inserted successfully"}
+    except Exception as e:
+        raise Exception('Error occured: database connection failure')
+
+async def delete_cart(user_name):
+    try:
+        cart = await cart_items.find_one({"user_name": user_name})
+        if cart:
+            print(cart)
+            await insert_order_history(cart)
+            await cart_items.delete_one({"user_name": user_name})
+            return {"msg": "user deleted successfully"}
+    except:
+        return {"Error": "User not found"}

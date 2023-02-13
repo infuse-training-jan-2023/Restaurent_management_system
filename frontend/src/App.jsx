@@ -9,7 +9,7 @@ import { AuthContext } from './context/AuthContext';
 import OrderMsg from './components/OrderSuccess'
 
 import "./styles/output.css";
-import { Route, Routes , Link} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   const storedUser = localStorage.getItem('user');
@@ -54,7 +54,7 @@ function App() {
     </div>
     </Context.Provider>
     </AuthContext.Provider>
-
+   
     </>
   )
 }
