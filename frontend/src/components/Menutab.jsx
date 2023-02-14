@@ -11,10 +11,10 @@ const Menutab =()=>
     const fetchData = async () => {
         axios.get('http://localhost:8000/items')
           .then(res => {
-            // setFood(res.data)
-            setFood(res.data.sort((a,b)=>{
-              if (a.price >b.price) return -1;
-            }))
+            setFood(res.data.data)
+            // setFood(res.data.sort((a,b)=>{
+            //   if (a.price >b.price) return -1;
+            // }))
             console.log(res.data);
           })
       }; 
