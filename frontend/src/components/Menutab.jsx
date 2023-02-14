@@ -62,9 +62,6 @@ const Menutab =()=>
     const [sortType, setSortType] = useState('albums');
 
     useEffect(() => {
-      // const sortedList=[...foods].sort((a,b)=>{
-      //     if (a.price < b.price) return -1;
-      //    })
       const sortedList = ( sortType=='low' ? [...foods].sort((a,b)=>{
         if (a.price < b.price) return -1;
       }):[...foods].sort((a,b)=>{
@@ -85,10 +82,19 @@ const Menutab =()=>
                 <button className="btn" onClick={() => changeMenuTabs('snacks')}>Snacks</button>            
                 <button className="btn "onClick={() => changeMenuTabs('meals')}>Meals</button>           
                 <button className="btn " onClick={() => changeMenuTabs('beverages')}>Beverages</button>   
+                <span>
+                <label className="p-2">Sort</label>
                 <select onChange={(e) => setSortType(e.target.value)}>
                 <option value="high">high-low</option>
                 <option value="low">low-high</option>
-                </select>         
+                </select>
+                <label className="p-2">FoodType</label>
+                <select onChange={(e) => setFoodType(e.target.value)}>
+                <option></option>
+                <option value="veg">Veg</option>
+                <option value="non-veg">Non-veg</option>
+                </select>
+                </span>         
             </div>  
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 overflow-y-scroll h-96">
