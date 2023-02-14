@@ -38,23 +38,26 @@ function App() {
 
   const [context, setContext] = useState(localStorage.length);
   const [username, setUsername] = useState('');
+
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <>
-        <AuthContext.Provider value={{ user, signIn, signOut }}>
-
-    <Context.Provider value={[context, setContext]}>
-    <div className="bg-orange-50">
-
+      <AuthContext.Provider value={{ user, signIn, signOut }}>
+        <Context.Provider value={[context, setContext]}>
+          <div className="bg-orange-50">
             <Header/>
-            <Banner/>
+            <Banner scrollToBottom={scrollToBottom}/>
             <Menutab/>
             <Footer/> 
-            
-
-    </div>
-    </Context.Provider>
-    </AuthContext.Provider>
-   
+          </div>
+        </Context.Provider>
+      </AuthContext.Provider>
     </>
   )
 }

@@ -12,10 +12,10 @@ const Menutab =()=>
         axios.get('http://localhost:8000/items')
           .then(res => {
             setFood(res.data.data)
-            // setFood(res.data.sort((a,b)=>{
-            //   if (a.price >b.price) return -1;
-            // }))
-            console.log(res.data);
+            setFood(res.data.data.sort((a,b)=>{
+              if (a.price >b.price) return -1;
+            }))
+            console.log(res.data.data);
           })
       }; 
       console.log(user)
@@ -28,17 +28,14 @@ const Menutab =()=>
               {
                 "item_name": item_name,
                 "quantity": 1,
-                "price": price,
-                "total": 0,
+                "price": price
               }
             ]
           };
-
+      
           axios.post('http://localhost:8000/cart', cartItem)
             .then(res => {
               console.log(res.data);
-              setUpdate(1)
-
             })
             .catch(error => {
               console.error(error);
@@ -136,6 +133,6 @@ const FoodCard = ({ img, item_name, description, price,onClick}) => {
     </div>
   </div>
     )
-}
+} 
 
 export default Menutab

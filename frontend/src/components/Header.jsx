@@ -92,10 +92,10 @@ const Header = () => {
       axios
         .get(`http://localhost:8000/cart/${user}`)
         .then((res) => {
-          setCartItems(res.data.items);
-          settotal(res.data.grand_total);
-          console.log(res.data);
-          setCartSize(res.data.items.length);
+          setCartItems(res.data.data.items);
+          settotal(res.data.data.grand_total);
+          console.log(res.data.data);
+          setCartSize(res.data.data.items.length);
         })
         .catch((error) => {
           console.error(error);
@@ -107,12 +107,12 @@ const Header = () => {
     <>
       <CartContext.Provider value={{ cartItems }}>
         <Context.Provider value={context}>
-          <nav className="flex fixed w-full top-0 items-center justify-between border-4 border-white rounded-lg flex-wrap bg-orange-50 p-6">
+          <nav className="flex fixed w-full top-0 items-center justify-between border-4 border-white rounded-sm flex-wrap bg-orange-50 p-6"style={{ zIndex:'2'}}>
             <div className="flex items-center flex-shrink-0 text-white mr-6">
               <img src={logo} className="h-12 rounded-full my-4" />
               <span className="font-semibold text-xl tracking-tight"></span>
             </div>
-            <div className="block lg:hidden">
+            <div className="block sm:hidden">
               <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
                 <svg
                   className="fill-current h-3 w-3"
@@ -124,14 +124,8 @@ const Header = () => {
                 </svg>
               </button>
             </div>
-            <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-              <div className="text-sm lg:flex-grow">
-                <a
-                  href="#responsive-header"
-                  className="bg-primary px-6 py-3 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-3 mr-2 "
-                >
-                  Reserve Table
-                </a>
+            <div className="w-full block flex-grow sm:flex sm:items-center sm:w-auto">
+              <div className="text-sm sm:flex-grow">
                 {!user && (
                   <button
                     className="bg-primary px-6 py-3 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-3 mr-2 "
@@ -144,7 +138,7 @@ const Header = () => {
 
               {user && (
                 <span>
-                  <div className="text-3xl font-medium text-white-900 dark:text-white  px-4 block poppins rounded-full mt-4 lg:inline-block lg:mt-0 text-black">
+                  <div className="text-3xl font-medium text-white-900 px-4 block poppins rounded-full mt-4 sm:inline-block sm:mt-0 text-black">
                     Hi {user}{" "}
                     <span>
                       <Avatar
@@ -180,9 +174,9 @@ const Header = () => {
                 <div className="fixed inset-1 transition-opacity">
                   <div className="absolute inset-1 bg-black opacity-75"></div>
                 </div>
-                <div className="bg-white text-lg rounded-lg px-14 p-10  overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                <div className="bg-white text-sm rounded-sm px-14 p-10  overflow-hidden shadow-xl transform transition-all sm:max-w-sm sm:w-full">
                   <form className="text-center" onSubmit={log_in}>
-                    <h2 className="text-lg font-medium mb-">Login</h2>
+                    <h2 className="text-sm font-medium mb-">Login</h2>
                     <div className="mb-5">
                       <label className="block mb-2 text-sm font-medium text-black-0">
                         Username
@@ -235,7 +229,7 @@ const Header = () => {
                   onClose={closeCart}
                   open={open}
                 >
-                  <div class="w-3/4 bg-white px-10 py-10">
+                  <div class="w-3/4 bg-white px-10 py-10" style={{ zIndex:'2'}}>
                     <div class="flex justify-between border-b pb-8">
                       <h1 class="font-semibold text-2xl">Cart</h1>
                     </div>
