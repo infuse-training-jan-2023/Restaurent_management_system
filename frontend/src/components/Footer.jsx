@@ -4,10 +4,10 @@ const Footer = () => {
     return (
         <section className="w-full bg-yellow-50">
             
-<footer className="bg-white border-t-2 border-black dark:bg-gray-900">
-    <div className="grid grid-cols-2 gap-8 px-6 py-8 md:grid-cols-3">
-        <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Company</h2>
+<footer className="bg-white border-t-2 border-black dark:bg-blacks align-center">
+    <div className="grid grid-cols-2 gap-8 px-6 py-8 md:grid-cols-3 justify-center">
+        <div className='text-center'>
+            <h2 className="mb-6 text-sm font-bold text-black uppercase dark:text-gray-400">Company</h2>
             <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
                     <a href="#" className=" hover:underline">About</a>
@@ -23,8 +23,8 @@ const Footer = () => {
                 </li>
             </ul>
         </div>
-        <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Help center</h2>
+        <div className='text-center'>
+            <h2 className="mb-6 text-sm font-bold text-black uppercase dark:text-gray-400">Help center</h2>
             <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
                     <a href="#" className="hover:underline">Discord Server</a>
@@ -40,8 +40,8 @@ const Footer = () => {
                 </li>
             </ul>
         </div>
-        <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Legal</h2>
+        <div className='text-center'>
+            <h2 className="mb-6 text-sm font-semibold text-black uppercase dark:text-gray-400">Legal</h2>
             <ul className="text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
                     <a href="#" className="hover:underline">Privacy Policy</a>
@@ -55,7 +55,7 @@ const Footer = () => {
             </ul>
         </div>
     </div>
-    <div className="px-4 py-6 bg-gray-100 dark:bg-gray-700 md:flex md:items-center md:justify-center">
+    <div className="px-4 py-6 bg-gray-200 dark:bg-gray-700 md:flex md:items-center md:justify-center">
         <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">© 2023 RestaurantName™ .  All Rights Reserved.
         </span>
         <div className="flex mt-4 space-x-6 sm:justify-center md:mt-0">

@@ -32,7 +32,7 @@ body::-webkit-scrollbar {
   font-family: 'Poppins', sans-serif;
 }
 .bg-primary {
-  background: #f91944;
+  background:black;
 }
 .bg-primary-dark {
   background: #ce193c;
@@ -42,6 +42,13 @@ body::-webkit-scrollbar {
   border: 1px solid #f91944;
 }
 
+.hide-scroll-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scroll-bar::-webkit-scrollbar {
+  display: visible;
+}
 .btn{
   @apply text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-blue-300 focus:ring-4 transition duration-300 hover:scale-105
 }

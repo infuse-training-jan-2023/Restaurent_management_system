@@ -4,7 +4,7 @@ import logo from '../assets/logo.jpg';
 import {Context} from '../context/CartContext'
 import {InputNumber } from 'antd';
 import { AuthContext } from '../context/AuthContext';
-
+import { FaTrashAlt } from 'react-icons/fa';
 
 import axios from 'axios'
 
@@ -42,9 +42,8 @@ function CartItem({ item  ,onClick}) {
           <div class="flex w-2/5">
             <div class="w-20">
             </div>
-            <div class="flex flex-col justify-between ml-4 flex-grow">
+            <div class="flex flex-col justify-left ml-4 flex-grow">
               <span class="font-bold text-sm">{item.item_name}</span>
-            <button class="font-semibold hover:text-red-500 text-gray-500 text-xs" onClick={onClick}>Remove</button>
             </div>
           </div>
           <div class="flex justify-center w-1/5">
@@ -58,6 +57,9 @@ function CartItem({ item  ,onClick}) {
           </div>
           <span class="text-center w-1/5 font-semibold text-sm">{item.price}</span>
           <span class="text-center w-1/5 font-semibold text-sm">{item.price*quantity}</span>
+          <button class="font-semibold hover:text-red-500 text-gray-500 text-xs ht-4" onClick={onClick}> <FaTrashAlt/></button>
+
+         
         </div></>
   );
 }

@@ -9,13 +9,13 @@ const OrderMsg = ({onClick}) =>
 <div className="fixed inset-1 transition-opacity">
 <div className="absolute inset-1 bg-black opacity-75"></div>
 </div>
-<div className="bg-white text-lg rounded-lg px-14 p-10  overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+<div className="bg-white text-lg rounded-lg px-14 p-10 items-center overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
 
     <Result
     status="success"
     title="Order Successfull , Enjoy your meal!"
   />
-<button className="bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={onClick}>OK
+<button className="relative left-40 bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-7 rounded focus:outline-none focus:shadow-outline" onClick={onClick}>OK
 </button>
 </div>
 </div>

@@ -43,7 +43,7 @@ function App() {
         <AuthContext.Provider value={{ user, signIn, signOut }}>
 
     <Context.Provider value={[context, setContext]}>
-    <div className="App">
+    <div className="bg-orange-50">
 
             <Header/>
             <Banner/>
