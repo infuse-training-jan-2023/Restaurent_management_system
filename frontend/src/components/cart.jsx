@@ -1,66 +1,28 @@
-import React from "react";
-import { useState,useEffect ,useContext} from "react";
-import logo from '../assets/logo.jpg';
-import {Context} from '../context/CartContext'
-import {InputNumber } from 'antd';
-import { AuthContext } from '../context/AuthContext';
-import { FaTrashAlt } from 'react-icons/fa';
+import React from 'react';
 
-import axios from 'axios'
-
-function CartItem({ item  ,onClick}) {
-  const [quantity ,setQuntity ]= useState(item.quantity)
-  const { user, signIn, signOut } = useContext(AuthContext);
-  const updateCart =(value) => {
-    console.log(value);
-    const cartItem = {
-          
-      "user_name":user,
-      "items": [
-        {
-          "item_name": item.item_name,
-          "quantity": parseInt(value),
-          "price": item.price
-        }
-      ]
-    
-    };
-
-    axios.post('http://localhost:8000/cart', cartItem)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  
-  }
+const CartItem = props => {
+//   const price = `$${props.price.toFixed(2)}`;
+  const price = "5";
 
   return (
-    <>
-<div class="flex bg-red-100 border border-black rounded items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-          <div class="flex w-2/5">
-            <div class="w-20">
-            </div>
-            <div class="flex flex-col justify-left ml-4 flex-grow">
-              <span class="font-bold text-sm">{item.item_name}</span>
-            </div>
-          </div>
-          <div class="flex justify-center w-1/5">
-            
-            <InputNumber autoFocus={true} min={1} defaultValue={quantity}
-        onChange={(value) => {
-          setQuntity(value)
-          // TODO:
-          updateCart(value)
-        }} />
-          </div>
-          <span class="text-center w-1/5 font-semibold text-sm">{item.price}</span>
-          <span class="text-center w-1/5 font-semibold text-sm">{item.price*quantity}</span>
-          <button class="font-semibold hover:text-red-500 text-gray-500 text-xs ht-4" onClick={onClick}> <FaTrashAlt/></button>
-
-         
-        </div></>
+    <li className="flex justify-between items-center cart-item-border py-4 px-0 my-4 mx-0">
+      <div>
+        <h2 className="mt-0 mr-0 mb-2 ml-0 text-gray-750">Samosa</h2>
+        <div className="w-[10rem] flex justify-between items-center">
+          <span className="font-bold text-yellow-750">{price}</span>
+          <span className="font-bold custom-border py-1 px-3 rounded-md text-gray-750">{`x${props.amount}`}</span>
+        </div>
+      </div>
+      <div className="flex flex-col md:flex-row">
+        <button className="cart-item-btn" onClick={props.onRemove}>
+          -
+        </button>
+        <button className="cart-item-btn" onClick={props.onAdd}>
+          +
+        </button>
+      </div>
+    </li>
   );
-}
-export default CartItem
+};
+
+export default CartItem;
