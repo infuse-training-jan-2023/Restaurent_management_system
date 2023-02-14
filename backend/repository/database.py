@@ -9,7 +9,7 @@ import base64
 #MONGOBD driver
 import motor.motor_asyncio
 
-client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://anis:anis%40123@mydb.tpgkpds.mongodb.net')
+client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://harish_kavlekar:mongo123@restaurant.xw2cat1.mongodb.net/test')
 
 database = client.Restaurant
 order_db = database.orders
