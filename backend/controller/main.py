@@ -30,6 +30,12 @@ def read_root():
 async def get_tables():
     response = await fetch_all_tables()
     return response
+@app.put("/tables/{table_no}",response_model=Tables)
+async def update_table(table_no:int,capacity:int,price:int,date:str,slot:str):
+     response = await update_tables(table_no,capacity,price,date,slot)
+     if response:
+         return response
+     raise HTTPException(404, f"no table with table no{table_no}")
 
 @app.post("/tables",response_model=Tables)
 async def post_table(table: Tables):
