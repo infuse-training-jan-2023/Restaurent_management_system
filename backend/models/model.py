@@ -16,10 +16,10 @@ class Orders(BaseModel):
     date: str
 
 class Tables(BaseModel):
+    user_name: str
     table_no: int
     capicity: int
     date: str
-    from_time: str
-    to_time: str
-    available: bool
     price: int
+    slot: str
+    

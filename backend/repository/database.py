@@ -38,6 +38,11 @@ async def get_orders():
     except Exception as e:
         raise Exception("Error: ", e)
 
+async def update_tables(table_no,capicity,price,date,slot):
+     await tables_data.update_one({'table_no':table_no},{"$set":{'capicity':capicity,'price':price,'date':date,'slot':slot}})
+     table = await tables_data.find_one({"table_no":table_no})
+     return table
+
 
 async def fetch_all_tables():
     tables = []
