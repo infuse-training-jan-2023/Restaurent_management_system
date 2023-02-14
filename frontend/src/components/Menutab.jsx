@@ -11,11 +11,11 @@ const Menutab =()=>
     const fetchData = async () => {
         axios.get('http://localhost:8000/items')
           .then(res => {
-            // setFood(res.data)
-            setFood(res.data.sort((a,b)=>{
+            setFood(res.data.data)
+            setFood(res.data.data.sort((a,b)=>{
               if (a.price >b.price) return -1;
             }))
-            console.log(res.data);
+            console.log(res.data.data);
           })
       }; 
       console.log(user)
@@ -36,7 +36,7 @@ const Menutab =()=>
       
           axios.post('http://localhost:8000/cart', cartItem)
             .then(res => {
-              console.log(res.data);
+              console.log(res.data.data);
             })
             .catch(error => {
               console.error(error);
@@ -81,7 +81,7 @@ const Menutab =()=>
                 <button className="btn" onClick={() => changeMenuTabs('all')}>All</button>            
                 <button className="btn" onClick={() => changeMenuTabs('snacks')}>Snacks</button>            
                 <button className="btn "onClick={() => changeMenuTabs('meals')}>Meals</button>           
-                <button className="btn " onClick={() => changeMenuTabs('beverages')}>Beverages</button>   
+                <span><img className="h-12" src='../../public/beverage.png' onClick={() => changeMenuTabs('beverages')}/><button className=" "  onClick={() => changeMenuTabs('beverages')}>Beverages</button> </span>  
                 <span>
                 <label className="p-2">Sort</label>
                 <select onChange={(e) => setSortType(e.target.value)}>
@@ -98,10 +98,9 @@ const Menutab =()=>
             </div>  
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 overflow-y-scroll h-96">
-            {menuTab==='all'? foods.map(item=>(<FoodCard key={item._id} {...item} onClick={()=>{addToCart(item)}} />)):
-          foods.filter((item) => menuTab === item.tag).map(item =>(<FoodCard {...item} onClick={()=>{addToCart(item)}} />
-           ))}
-          </div>
+            {menuTab==='all'? foods.map(item=>(<FoodCard {...item} onClick={()=>{addToCart(item)}}/>)) :
+            foods.filter((item) => menuTab === item.tag).map(item =>(<FoodCard {...item}  onClick={ () => { addToCart (item) }} />))}
+            </div>
 {/* {<div class="flex flex-col bg-white m-auto p-auto">
       <div className=" flex overflow-x-scroll pb-10 -h-1 hide-scroll-bar">
         <div className="flex flex-nowrap lg:ml-40 md:ml-20 ml-10 ">

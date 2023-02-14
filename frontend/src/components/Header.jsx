@@ -33,7 +33,7 @@ const Header = () => {
     axios
       .delete(`http://localhost:8000/checkout/${user}`)
       .then((res) => {
-        console(res.data.items);
+        console(res.data.data.items);
       })
       .catch((error) => {
         console.error(error);
@@ -49,7 +49,7 @@ const Header = () => {
     axios
       .delete(`http://localhost:8000/cart/${user}/${deleteItem.item_name}`)
       .then((res) => {
-        console(res.data.items);
+        console(res.data.data.items);
       })
       .catch((error) => {
         console.error(error);
@@ -92,10 +92,10 @@ const Header = () => {
       axios
         .get(`http://localhost:8000/cart/${user}`)
         .then((res) => {
-          setCartItems(res.data.items);
-          settotal(res.data.grand_total);
-          console.log(res.data);
-          setCartSize(res.data.items.length);
+          setCartItems(res.data.data.items);
+          settotal(res.data.data.grand_total);
+          console.log(res.data.data);
+          setCartSize(res.data.data.items.length);
         })
         .catch((error) => {
           console.error(error);

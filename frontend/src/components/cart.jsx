@@ -12,7 +12,6 @@ function CartItem({ item  ,onClick}) {
   const [quantity ,setQuntity ]= useState(item.quantity)
   const { user, signIn, signOut } = useContext(AuthContext);
   const updateCart =(value) => {
-    console.log(value);
     const cartItem = {
           
       "user_name":user,
