@@ -5,7 +5,6 @@ import {Context} from '../context/CartContext'
 import {InputNumber } from 'antd';
 import { AuthContext } from '../context/AuthContext';
 import { FaTrashAlt } from 'react-icons/fa';
-
 import axios from 'axios'
 
 function CartItem({ item  ,onClick}) {
@@ -58,8 +57,7 @@ function CartItem({ item  ,onClick}) {
           <span class="text-center w-1/5 font-semibold text-sm">{item.price}</span>
           <span class="text-center w-1/5 font-semibold text-sm">{item.price*quantity}</span>
           <button class="font-semibold hover:text-red-500 text-gray-500 text-xs ht-4" onClick={onClick}> <FaTrashAlt/></button>
-
-         
+  
         </div></>
   );
 }
