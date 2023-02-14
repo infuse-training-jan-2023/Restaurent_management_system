@@ -9,7 +9,7 @@ import base64
 #MONGOBD driver
 import motor.motor_asyncio
 
-client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://anas_ahmed:mongo123@restaurant.xw2cat1.mongodb.net')
+client = motor.motor_asyncio.AsyncIOMotorClient('mongodb+srv://anis:anis%40123@mydb.tpgkpds.mongodb.net')
 
 database = client.Restaurant
 order_db = database.orders
@@ -18,12 +18,10 @@ collection = database.items
 cart_items = database.cart
 order_history= database.orderhistory
 
-
 async def insert_order(orders):
     try:
-        date = datetime.utcnow()
-        orders["date"] = date
         orders["status"] = "prep"
+        orders["date"] = datetime.now()
         await order_db.insert_one(orders)
         return orders
     except Exception as e:
@@ -37,7 +35,7 @@ async def get_orders():
             orders.append(Orders(**items))
         return orders
     except Exception as e:
-        raise Exception("Error: ", e)
+        raise Exception("Error: database connection failure")
 
 async def fetch_all_tables():
     tables = []
@@ -45,6 +43,11 @@ async def fetch_all_tables():
     async for document in cursor:
         tables.append(Tables(**document))
     return tables
+
+async def update_tables(table_no,capicity,date,from_date,to_date,available,price):
+    await tables_data.update_one({'table_no':table_no},{"$set":{'capicity':capicity,'date':date, 'from_time':from_date, 'to_time':to_date,'available':available, 'price':price}})
+    table = await tables_data.find_one({"table_no":table_no})
+    return table
 
 async def create_table(table):
     document = table
@@ -82,7 +85,7 @@ async def addto_cart(cart_data):
     except Exception as e:
         raise Exception("Error: ", e.__format__)
 
-async def updatecart(data):
+async def update_cart(data):
     try:
         username = data["user_name"]
         item = data["items"][0]
@@ -131,45 +134,6 @@ async def updatecart(data):
                 return {"msg": "Item add failed"}
     except Exception as e:
         raise Exception("Error: Item Update failed")
-# async def updatecart(data):
-#     try:
-#         print(data["items"])
-#         item = data["items"]
-#         username = data["user_name"]
-#         item_name=item[0]["item_name"]
-#         quantity=item[0]["quantity"]
-#         price=item[0]["price"]
-#         print(quantity)
-#         cart = await cart_items.find_one({"user_name": username})
-#         if cart:
-
-#             item_exists = False
-#             for item in cart["items"]:
-#                 if item["item_name"] == item_name:
-#                     item_exists = True
-#                     item["quantity"] = quantity
-#                     break
-#             if item_exists:
-#                 result = await cart_items.update_one({"_id": cart["_id"]}, {"$set": {"items": cart["items"]}})
-#                 # data = await cart_items.find_one({"user_name": username})
-#                 return data
-#             else:
-#                 new_item = {"item_name": item_name, "quantity": quantity, "price": price}
-#                 result = await cart_items.update_one({"_id": cart["_id"]}, {"$push": {"items": new_item}})
-#                 if result.modified_count == 1:
-#                     return {"msg": "Item added successfully"}
-#                 else:
-#                     return {"msg": "Item add failed"}
-#         else:
-#             new_cart = {"user_name": username, "items": [{"item_name": item_name, "quantity": quantity, "price": price}]}
-#             result = await cart_items.insert_one(new_cart)
-#             if result.modified_count == 1:
-#                     return {"msg": "Item added successfully"}
-#             else:
-#                     return {"msg": "Item add failed"}
-#     except Exception as e:
-#         raise Exception('Error occured: ',e.__format__)
-
 
 
 async def get_all_cart_items():
@@ -177,10 +141,11 @@ async def get_all_cart_items():
         items_in_cart = []
         cursor = cart_items.find({})
         async for document in cursor:
-            items_in_cart.append(Items(**document))
+            items_in_cart.append(AddToCart(**document))
         return items_in_cart
     except Exception as e:
-        raise Exception('Error occured: ',e)
+        raise Exception('Error occured: database connection failure')
+
 
 async def get_a_cart_item(user_name):
     try:
@@ -188,8 +153,8 @@ async def get_a_cart_item(user_name):
         print(cursor)
         return cursor
     except Exception as e:
-        raise Exception('Error occured: ',e)
-    
+        raise Exception('Error occured: database connection failure')
+
 async def delete_item_in_cart(username, item_name):
     try:
         cart = await cart_items.find_one({"user_name": username})
@@ -219,10 +184,12 @@ async def delete_item_in_cart(username, item_name):
             return {"Error": "User not found"}
     except Exception as e:
         raise Exception('Error occured: database connection failure')
-    
-async def insert_order_history(data):
+
+
+async def insert_order_history(order):
     try:
-        await order_history.insert_one(data)
+        order["date"] = datetime.now()
+        await order_history.insert_one(order)
         return {"Success": "Order history inserted successfully"}
     except Exception as e:
         raise Exception('Error occured: database connection failure')

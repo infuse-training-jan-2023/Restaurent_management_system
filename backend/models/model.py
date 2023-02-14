@@ -16,10 +16,11 @@ class Orders(BaseModel):
     status: str
     date: datetime
 
-class OrderList(BaseModel):
+class OrderHistory(BaseModel):
     user_name: str = Field(...)
     items: list = Field(...)
     grand_total: int = Field(...)
+    date: datetime
 
     class Config:
         allow_population_by_field_name = True
@@ -47,6 +48,7 @@ class Item(BaseModel):
     price: int
     total: int = None
 
+# todo
 class AddToCart(BaseModel):
     user_name: str = Field(...)
     items: list[Item] = Field(...)

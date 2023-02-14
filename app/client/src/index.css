@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.header-banner {
+    background-image: url('./assets/restaurant-banner.png');
+    height: 600px !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.orderContainer::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.banner {
+  background-image: url('../assets/bannerbackground.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+.poppins {
+  font-family: 'Poppins', sans-serif;
+}
+.bg-primary {
+  background: #f91944;
+}
+.bg-primary-dark {
+  background: #ce193c;
+}
+
+.border-primary {
+  border: 1px solid #f91944;
+}
+
+.btn{
+  @apply text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-blue-300 focus:ring-4 transition duration-300 hover:scale-105
+}

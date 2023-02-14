@@ -28,15 +28,17 @@ const Menutab =()=>
               {
                 "item_name": item_name,
                 "quantity": 1,
-                "price": price
+                "price": price,
+                "total": 0,
               }
             ]
-          
           };
-      
+
           axios.post('http://localhost:8000/cart', cartItem)
             .then(res => {
               console.log(res.data);
+              setUpdate(1)
+
             })
             .catch(error => {
               console.error(error);
@@ -128,6 +130,6 @@ const FoodCard = ({ img, item_name, description, price,onClick}) => {
     </div>
   </div>
     )
-} 
+}
 
 export default Menutab

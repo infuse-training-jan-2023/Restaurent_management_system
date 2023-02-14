@@ -35,6 +35,13 @@ async def post_table(table: Tables):
         return response
     raise HTTPException(400, "Could not create table")
 
+@app.put("/tables/{table_no}",response_model=Tables)
+async def update_table(table_no:int,capacity:int,date:str,from_time:str,to_time:str,available:bool,price:int):
+    response = await update_tables(table_no,capacity,date,from_time,to_time,available,price)
+    if response:
+        return response
+    raise HTTPException(404, f"no table with table no{table_no}")
+
 @app.post("/orders", response_model=Orders)
 async def order_details(orders:Orders):
     response = await insert_order(orders.dict())
@@ -61,19 +68,26 @@ async def display_items():
     except Exception as e:
         raise Exception('Error occured: ',e)
 
-@app.post("/cart", response_model=dict)
+@app.post("/cart")
 async def add_to_cart(cart: AddToCart):
-    data = await updatecart(cart.dict())
+    data = await update_cart(cart.dict())
     if data:
         return data
     raise HTTPException(400, "Could not insert items to cart")
+
+@app.get("/cart")
+async def get_cart():
+    data = await get_all_cart_items()
+    if data:
+        return data
+    raise HTTPException(400, "Could not get items in cart")
 
 @app.get("/cart/{user_name}", response_model=AddToCart)
 async def get_cart(user_name):
     data = await get_a_cart_item(user_name)
     if data:
         return data
-    raise HTTPException(404, "Could not find username")
+    raise HTTPException(404, detail="Could not find username")
 
 @app.delete("/cart/{user_name}/{item_name}")
 async def delete_items_in_cart(user_name,item_name):
