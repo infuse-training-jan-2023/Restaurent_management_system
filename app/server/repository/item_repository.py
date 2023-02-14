@@ -30,7 +30,7 @@ async def insert_items():
     item = item_collection.insert_many(items)
     return ('Item add seccessfully')
 
-async def fetch_all_items():
+async def fetch_all_items() -> list:
     try:
         data = [_item_helper(item) async for item in  item_collection.find()]
         return data if data else None
