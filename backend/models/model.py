@@ -20,6 +20,7 @@ class OrderHistory(BaseModel):
     user_name: str = Field(...)
     items: list = Field(...)
     grand_total: int = Field(...)
+    date: datetime
 
     class Config:
         allow_population_by_field_name = True

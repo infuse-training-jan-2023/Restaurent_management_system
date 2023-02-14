@@ -186,9 +186,10 @@ async def delete_item_in_cart(username, item_name):
         raise Exception('Error occured: database connection failure')
 
 
-async def insert_order_history(data):
+async def insert_order_history(order):
     try:
-        await order_history.insert_one(data)
+        order["date"] = datetime.now()
+        await order_history.insert_one(order)
         return {"Success": "Order history inserted successfully"}
     except Exception as e:
         raise Exception('Error occured: database connection failure')
