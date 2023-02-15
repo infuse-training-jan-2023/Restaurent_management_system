@@ -1,5 +1,4 @@
 from ._client import get_collection
-from server.models.tables_model import Tables
 
 table_collection = get_collection('table')
 
@@ -19,6 +18,9 @@ async def fetch_all_tables():
     return data if data else None
 
 async def create_table(table: dict) -> dict:
-    result = await table_collection.insert_one(table)
-    result = await table_collection.find_one({"_id": result.inserted_id})
-    return _table_helper(result)
+    try:
+        result = await table_collection.insert_one(table)
+        result = await table_collection.find_one({"_id": result.inserted_id})
+        return _table_helper(result)
+    except Exception as e:
+        return {"Error": e.message}

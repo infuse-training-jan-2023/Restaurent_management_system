@@ -61,7 +61,7 @@ async def update_or_add_cart(data: dict) -> dict:
                 result = await cart_collection.find_one({"_id": cart["_id"]})
                 return _cart_helper(result)
     except Exception as e:
-        raise Exception("Error: ",e)
+        raise Exception("Error: Item Update failed")
 
 async def get_all_cart_items() -> list:
     try:
@@ -97,6 +97,6 @@ async def delete_item_in_cart(username: str, item_name:str) -> dict:
                     grand_total = sum([item["total"] for item in items])
                     await cart_collection.update_one({"user_name": username}, {"$set": {"items": items, "grand_total": grand_total}})
                     result  = await cart_collection.find_one({"user_name": username})
-                    return _cart_helper(result)
+                    return {"msg": "Item deleted successfully"}
     else:
         return None
