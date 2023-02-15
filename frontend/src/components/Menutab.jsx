@@ -20,14 +20,12 @@ const Menutab =()=>
           .then(res => {
             setFood(res.data.data)
             setFood(res.data.data.sort((a,b)=>{
-            setFood(res.data.data)
-            setFood(res.data.data.sort((a,b)=>{
               if (a.price >b.price) return -1;
             }))
             console.log(res.data.data);
             console.log(res.data.data);
           })
-      }; 
+    }; 
       const addToCart=({ img, item_name, quantity, price, type}) => {
       if(user){ 
         const cartItem = {
