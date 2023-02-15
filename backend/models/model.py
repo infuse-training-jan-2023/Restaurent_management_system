@@ -48,8 +48,8 @@ class Item(BaseModel):
     total: int = None
 
 class AddToCart(BaseModel):
-    user_name: str = Field(...)
-    items: list[Item] = Field(...)
+    # user_name: str = Field(...)
+    # items: list[Item] = Field(...)
     grand_total: int = None
 
     class Config:

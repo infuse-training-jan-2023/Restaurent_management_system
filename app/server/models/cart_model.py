@@ -9,7 +9,7 @@ class Item(BaseModel):
 # todo
 class Cart(BaseModel):
     user_name: str = Field(...)
-    items: list[Item] = Field(...)
+    #items: list[Item] = Field(...)
     grand_total: int = None
 
     class Config:

@@ -1,0 +1,14 @@
+.react-datepicker-wrapper{
+    width:max-content !important;
+    position:static !important;
+}
+
+.react-datepicker{
+    position:static !important;
+    z-index: 0 !important;
+}
+
+.react-datepicker__input-container{
+
+    position: static !important;
+}
