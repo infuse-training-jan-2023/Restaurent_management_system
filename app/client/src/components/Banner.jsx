@@ -2,8 +2,8 @@ import React from 'react'
 
 const Banner = () => {
     return (
-      
-        <section className="header-banner h-96 w-full bg-yellow-50">
+    //   <div className='h-96 w-56'>
+        <section style="background-image: url('./assets/bg.png')"className=" bg-cover bg-left bg-no-repeat bg-fixed h-64 w-64" >
             <div className="flex flex-col items-center justify-center h-full">
                 <h1 className="text-center text-3xl md:text-4xl lg:text-5xl poppins font-semibold text-white ">Best food waiting for you</h1>
   
@@ -13,6 +13,7 @@ const Banner = () => {
                 </div>
             </div>
         </section>
+    //   </div>
     )
   }
 
