@@ -52,3 +52,7 @@ body::-webkit-scrollbar {
 .btn{
   @apply text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-blue-300 focus:ring-4 transition duration-300 hover:scale-105
 }
+
+.food-filters{
+  @apply p-8 hover:border-b-2 hover:border-solid focus:border-b-4 focus:border-solid border-black
+}

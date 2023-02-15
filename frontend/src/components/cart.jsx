@@ -37,12 +37,13 @@ function CartItem({ item  ,onClick}) {
 
   return (
     <>
-<div class="flex bg-red-100 border border-black rounded items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+<div class="flex bg-purple-100 border border-black rounded items-center hover:bg-gray-100 -mx-8 px-6 py-5 w-96">
           <div class="flex w-2/5">
             <div class="w-20">
+            <span class="font-bold text-sm">{item.item_name}</span>
+
             </div>
             <div class="flex flex-col justify-left ml-4 flex-grow">
-              <span class="font-bold text-sm">{item.item_name}</span>
             </div>
           </div>
           <div class="flex justify-center w-1/5">
