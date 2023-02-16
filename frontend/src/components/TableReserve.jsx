@@ -3,8 +3,7 @@ import axios from 'axios'
 import { useState,useContext} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-
+import moment from "moment";
 
 const ReserveTable = () =>{
   
@@ -12,7 +11,7 @@ const ReserveTable = () =>{
   const date = new Date();
   const tomorrow = new Date();
   const [reservationData ,setReservationData]= useState([])
-  const [reservationDate ,setReservationDate]= useState(date)
+  const [reservationDate ,setReservationDate]= useState(moment(date).format("DD MM YYYY"))
   const [slot ,setSlot]= useState('Morning')
 
   axios.get('http://localhost:8000/tables')
@@ -37,55 +36,39 @@ const ReserveTable = () =>{
   console.log(reservationDate)
   console.log(slot)
   const reserved = []
-  const formatDate = (Rdate) => {
-    let dd = Rdate.getDate();
-    let mm = Rdate.getMonth() + 1;
-    let yyyy = Rdate.getFullYear();
-    if (dd < 10) dd = "0" + dd;
-    if (mm < 10) mm = "0" + mm;
-    let udate = dd + "-" + mm + "-" + yyyy;
-    return udate;
-  };
-
-  // const userName = "Dummy"
-  //   const reserveData = {
-  //     user_name: userName , 
-  //     table_no: tableNo,
-  //     capacity: tableCapacity,
-  //     date: reserveDate,
-  //     price: tablePrice,
-  //     slot: slot
-  //     }
+  const userName = "Dummy"
   
-  // const reserve_table =  () =>{
-  //   console.log("inside");
-  //   axios.post("http://localhost:8000/tables",reserveData).then((res) => {
-  //   console.log("done")
-  //   console.log(res.data);
-  //   alert("Table has been reserved successfully")
-  // }).catch(error => { console.log(error); });
-  // }
-  const updateUI = (value, update) => {
-    reserved.splice(0, reserved.length)
-    if (value) setReservationDate(update);
-    else setSlot(update);
-    reservationData.map((data) => {
-      console.log("Outside"+ data.slot + slot +reservationDate +  data.date )
-      if (slot == data.slot && reservationDate == formatDate(data.date))
-      console.log("Data"+ data.slot + slot +reservationDate +  data.date )
-        reserved.push(data.table_no);
-    });
-  };
+   const reserve_table =  () =>{
+     console.log("inside");
+     axios.post("http://localhost:8000/tables",reserveData).then((res) => {
+     console.log("done")
+     console.log(res.data);
+     alert("Table has been reserved successfully")
+     show_modal()
+   }).catch(error => { console.log(error); });
+   }
+  
 
   const getBgColor = (val) => {
     console.log(reserved)
+   
+    if(reservationData != null){
+      
+    reservationData.map((data) => {
+
+      console.log("Outside"+ data.slot + slot +reservationDate +  data.date )
+      if (slot == data.slot && reservationDate == data.date){
+      console.log("Data"+ data.slot + slot +reservationDate +  data.date )
+        reserved.push(data.table_no);
+      }
+    })}
     if (reserved.length > 0) {
       reserved.map((r) => {
         if (r.table_no == val){ 
           console.warn("r" + r.table_no + " val "+val )
           return (style = "bg-gray-400");
       }
-      });
+      })
     }
     return " ";
   };
@@ -101,8 +84,9 @@ const ReserveTable = () =>{
             <img
               src={"table" + props.data.capacity + ".svg"}
               className={ getBgColor(props.data.table_no)+ " w-36 h-20 mx-auto "}
+              onClick={()=>loadModal(props.data)} 
             /> 
-            {/* onClick={()=>loadModal(props.styles[0],props.data)} to be inserted inside image */}
+            {/* to be inserted inside image */}
             <span className="text-gray-900 ml-2 text-left poppins text-lg">
               Capacity: {props.data.capacity}
             </span>
@@ -115,20 +99,32 @@ const ReserveTable = () =>{
   
   };
 
-  //const [tableNo, setTableNumber] = useState();
-  //const [tablePrice,setPrice] =useState();
-  //const [tableCapacity,setCapacity] =useState();
-  //const [isShown, setIsShown] = useState(false);
-  /*const loadModal = (val, data) => {
-    if (!val) {
+  const [tableNo, setTableNumber] = useState();
+  const [tablePrice,setPrice] =useState();
+  const [tableCapacity,setCapacity] =useState();
+  const [isShown, setIsShown] = useState(false);
+  const loadModal = (data) => {
       console.log(data);
       setIsShown(true);
       setPrice(data.price);
       setTableNumber(data.table_no);
-      setCapacity(data.capicity);
-    }
-  };
-  */
+      setCapacity(data.capacity);
+    
+  }
+  const reserveData = {
+    "user_name": userName,
+    "table_no": tableNo,
+    "capacity": tableCapacity,
+    "price": tablePrice,
+    "date": reservationDate,
+    "slot": slot
+  }
+
+  const show_modal = () => {
+  
+    setIsShown(current => !current);
+  }
+  
   
 
 
@@ -141,7 +137,7 @@ const ReserveTable = () =>{
           selected={reservationDate}
           selectsStart
           dateFormat="dd/MM/yyyy"
-          onChange={(date) => updateUI(true, date)}
+          onChange={(date) => setReservationDate(moment(date).format("MM DD YYYY"))}
           includeDates={[
             date,
             tomorrow.setDate(date.getDate() + 1),
@@ -150,7 +146,7 @@ const ReserveTable = () =>{
         />
         <span>
           <label className="p-2">Select slot:</label>
-          <select onChange={(e) => updateUI(false, e.target.value)}>
+          <select onChange={(e) => setSlot(e.target.value)}>
             <option value="Morning">Morning</option>
             <option value="Afternoon">Afternoon</option>
             <option value="Evening">Evening</option>
@@ -165,7 +161,7 @@ const ReserveTable = () =>{
         ))}
       </div>
 
-      {/* {isShown &&       
+    {isShown &&       
       <div className="relative">
         <div className="fixed top-0 left-0 right-0 bottom-0 opacity-100 bg-black z-50">
           <div className="flex items-center justify-center h-full mx-auto">
@@ -186,7 +182,7 @@ const ReserveTable = () =>{
                   <button type="button" onClick={reserve_table} className="bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Confirm
                   </button>
-                  <button type="button" onClick={show_login_modal} className="text-sm font-medium text-teal-500 hover:text-teal-400">
+                  <button type="button" onClick={show_modal} className="text-sm font-medium text-teal-500 hover:text-teal-400">
                     Cancel
                   </button>
                 </div>
@@ -195,7 +191,7 @@ const ReserveTable = () =>{
           </div>
         </div>
     </div>
-      } */}
+      } 
     </section>
   );
     
