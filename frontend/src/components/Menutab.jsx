@@ -87,7 +87,7 @@ const Menutab =()=>
       return(
     <section className="bg-orange-50 my-12 mt-1 py-10 max-w-screen-xl mx-auto px-6">  
             <div className="flex items-center justify-center space-x-6">
-            <div className="rounded-full p-1 box-border bg-white border border-black overflow-hidden ring-red-300 focus:ring-4 w-96 flex items-center">
+            <div className="rounded-full p-1 box-border bg-white border border-black overflow-hidden ring-red-300 focus:ring-4 w-96 flex items-center custom_search_css">
                     <input type="text" className=" rounded-full px-4 focus:outline-none w-full border-solid border-black bg-transparent"value={query} onChange={e => setQuery(e.target.value)} placeholder="search your food....." />
                     <button className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 ">Search</button>
                 </div>
@@ -123,7 +123,8 @@ const FoodCard = ({ img, item_name, description, price,onClick}) => {
 
   return (
     <div className="inline-block px-2 w-84 rounded-full custom_card_css" >
-    <div className="w-96 h-84 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-2xl transition-shadow  duration-300 ease-in-out "><div className="bg-white border border-gray-100 transition  duration-700 hover:shadow-xl p-4 rounded-lg">
+    <div className="w-96 h-84 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-2xl transition-shadow  duration-300 ease-in-out ">
+      <div className="bg-white border border-gray-100 transition  duration-700 hover:shadow-xl p-4 rounded-lg">
       <img className=" w-84 h-44 mx-auto transition duration-300 hover:scale-110" src={`data:image/jpeg;base64,${img}`} alt="" />
     <div className="h-36 flex flex-col items-center my-3 space-y-2">
         <h1 className="text-gray-900 poppins text-lg">{item_name}</h1>

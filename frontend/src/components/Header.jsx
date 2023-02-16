@@ -133,9 +133,9 @@ const Header = () => {
     <>
       <CartContext.Provider value={{ cartItems }}>
         <Context.Provider value={context}>
-          <nav className="flex fixed w-full top-0 items-center justify-between border-4 border-white rounded-sm flex-wrap bg-orange-50 p-6"style={{ zIndex:'2'}}>
+          <nav className="flex fixed w-full top-0 items-center justify-between border-white rounded-sm flex-wrap bg-orange-50 p-6"style={{ zIndex:'2'}}>
             <div className="flex items-center flex-shrink-0 text-white mr-6">
-              <img src={logo} className="h-12 rounded-full my-4" />
+              <img src={logo} className="h-20 rounded-full w-48" />
               <span className="font-semibold text-xl tracking-tight"></span>
             </div>
             <div className="block ">

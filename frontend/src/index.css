@@ -7,7 +7,7 @@
     height: 570px !important;
     width: auto !important;
     background-repeat: no-repeat;
-    background-position: left  -20px;
+    background-position: 120px -20px;
     background-size: 750px 600px;
     width: 92em;
     background-color: rgb(255, 245, 235);
@@ -31,6 +31,7 @@ body::-webkit-scrollbar {
 }
 .custom_banner_css{
   background-image: url('./BG3.png')
+
 }
 .poppins {
   font-family: 'Poppins', sans-serif;
@@ -97,6 +98,7 @@ body::-webkit-scrollbar {
 
   .custom_banner_css{
     background-image: url('./restaurant-banner.png');
+    background-position: left -20px;
   }
 
   .custom_h1{
@@ -108,6 +110,9 @@ body::-webkit-scrollbar {
     background-color: #dcd4d6;
   }
 
+  .custom_search_css{
+    display: none;
+  }
   .custom_top_options{
     display: none;
   }
