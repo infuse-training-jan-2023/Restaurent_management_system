@@ -104,6 +104,31 @@ const Header = () => {
     }
   }, [user, context, showCart]);
 
+
+    const [isVisible, setIsVisible] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  
+    const handleClick = () => {
+      setIsVisible(!isVisible);
+    };
+
+    
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <>
       <CartContext.Provider value={{ cartItems }}>
@@ -113,8 +138,10 @@ const Header = () => {
               <img src={logo} className="h-12 rounded-full my-4" />
               <span className="font-semibold text-xl tracking-tight"></span>
             </div>
-            <div className="block sm:hidden">
-              <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+            <div className="block ">
+              <button className="flex items-center px-3 py-2 border rounded text-black border-black hover:text-gray-600 hover:border-black"
+              onClick={handleClick}
+              >
                 <svg
                   className="fill-current h-3 w-3"
                   viewBox="0 0 20 20"
@@ -125,37 +152,17 @@ const Header = () => {
                 </svg>
               </button>
             </div>
-            <div className="w-full block flex-grow sm:flex sm:items-center sm:w-auto">
-              <div className="text-sm sm:flex-grow">
+            <div className="w-full block flex-grow sm:flex sm:items-center sm:w-auto custom_top_options" style={{ display: isVisible ? 'flex' : 'none' }}>
+              <div className="text-sm sm:flex-grow ">
                 {!user && (
                   <button
-                    className="bg-primary px-6 py-3 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-3 mr-2 "
+                    className="bg-primary px-6 py-3 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-3 mr-2 custom_top_options"
                     onClick={show_login_modal}
                   >
                     SignIn
                   </button>
                 )}
               </div>
-
-
-
-            <div class="relative">
-              <button dropdown-trigger aria-expanded="false" type="button" class="inline-block px-6 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-tl from-purple-700 to-pink-500 leading-pro text-sm ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs">Dropdown</button>
-              <p class="hidden transform-dropdown-show"></p>
-              <ul dropdown-menu class="z-10 text-sm lg:shadow-soft-3xl duration-250 before:duration-350 before:font-awesome before:ease-soft min-w-44 before:text-5.5 transform-dropdown pointer-events-none absolute left-auto top-1/2 m-0 -mr-4 mt-2 list-none rounded-lg border-0 border-solid border-transparent bg-white bg-clip-padding px-0 py-2 text-left text-slate-500 opacity-0 transition-all before:absolute before:right-7 before:left-auto before:top-0 before:z-40 before:text-white before:transition-all before:content-['\f0d8']">
-                <li>
-                  <a class="py-1.2 lg:ease-soft clear-both block w-full whitespace-nowrap border-0 bg-transparent px-4 text-left font-normal text-slate-500 hover:bg-gray-200 hover:text-slate-700 dark:text-white dark:hover:bg-gray-200/80 dark:hover:text-slate-700 lg:transition-colors lg:duration-300" href="javascript:;">Action</a>
-                </li>
-                <li>
-                  <a class="py-1.2 lg:ease-soft clear-both block w-full whitespace-nowrap border-0 bg-transparent px-4 text-left font-normal text-slate-500 hover:bg-gray-200 hover:text-slate-700 dark:text-white dark:hover:bg-gray-200/80 dark:hover:text-slate-700 lg:transition-colors lg:duration-300" href="javascript:;">Another action</a>
-                </li>
-                <li>
-                  <a class="py-1.2 lg:ease-soft clear-both block w-full whitespace-nowrap border-0 bg-transparent px-4 text-left font-normal text-slate-500 hover:bg-gray-200 hover:text-slate-700 dark:text-white dark:hover:bg-gray-200/80 dark:hover:text-slate-700 lg:transition-colors lg:duration-300" href="javascript:;">Something else here</a>
-                </li>
-              </ul>
-            </div>
-
-            
 
               {user && (
                 <span>
@@ -186,33 +193,6 @@ const Header = () => {
                   >
                     <FaShoppingCart />
                   </button>
-                  <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" className="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:mr-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white" type="button">
-    <span className="sr-only">Open user menu</span>
-    <img className="w-8 h-8 mr-2 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo"/>
-    Bonnie Green
-    <svg className="w-4 h-4 mx-1.5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-</button>
-
-<div id="dropdownAvatarName" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-    <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
-      <div className="font-medium ">Pro User</div>
-      <div className="truncate">name@flowbite.com</div>
-    </div>
-    <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
-      <li>
-        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-      </li>
-      <li>
-        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-      </li>
-      <li>
-        <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-      </li>
-    </ul>
-    <div className="py-2">
-      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-    </div>
-</div>
                 </Badge>
               </div>
             </div>
@@ -319,9 +299,9 @@ const Header = () => {
 
                     <div className=""></div>
                   </div>
-                  <div>
+                  {/* <div>
                     {total}
-                  </div>
+                  </div> */}
                 </Drawer>
               </>
             )}

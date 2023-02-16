@@ -72,8 +72,7 @@ const Menutab =()=>
         if (a.price < b.price) return -1;
       }):[...foods].sort((a,b)=>{
         if (a.price > b.price) return -1;
-      }))
-
+      }))  
       setFood(sortedList)
     },[sortType])
 
@@ -86,28 +85,30 @@ const Menutab =()=>
       return item.item_name.toLowerCase().includes(query.toLowerCase());
     });
       return(
-    <section className="bg-orange-50 my-12 py-10 max-w-screen-xl mx-auto px-6">
-            
+    <section className="bg-orange-50 my-12 mt-1 py-10 max-w-screen-xl mx-auto px-6">  
             <div className="flex items-center justify-center space-x-6">
-            <div className="rounded-full p-1 box-border mt-8 bg-white overflow-hidden ring-red-300 focus:ring-4 w-96 flex items-center">
-                    <input type="text" className=" rounded-full h-2px-4 focus:outline-none w-full bg-transparent"value={query} onChange={e => setQuery(e.target.value)} placeholder="search your food....." />
+            <div className="rounded-full p-1 box-border bg-white border border-black overflow-hidden ring-red-300 focus:ring-4 w-96 flex items-center">
+                    <input type="text" className=" rounded-full px-4 focus:outline-none w-full border-solid border-black bg-transparent"value={query} onChange={e => setQuery(e.target.value)} placeholder="search your food....." />
                     <button className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 ">Search</button>
                 </div>
-                <span><button className="food-filters" onClick={() => changeMenuTabs('all')}><img className=" h-12" src='../../public/breakfast.png'/>All</button></span>          
-                <span><button className="food-filters" onClick={() => changeMenuTabs('snacks')}><img className=" h-12" src='../../public/burger.png'/>Snacks</button></span>           
-                <span><button className="food-filters" onClick={() => changeMenuTabs('meals')}><img className=" h-12" src='../../public/dinner.png'/>Meals</button> </span>          
-                <span><button className="food-filters" onClick={() => changeMenuTabs('beverages')}><img className="h-12" src='../../public/beverage.png'/>Beverages</button> </span>  
-            
+
+                <div className="flex">
+                  <button className="food-filters custom_btn_css food_icon1" onClick={() => changeMenuTabs('all')}><img className=" h-12" src='../../public/breakfast.png'/>All</button>          
+                  <button className="food-filters custom_btn_css food_icon2" onClick={() => changeMenuTabs('snacks')}><img className=" h-12" src='../../public/burger.png'/>Snacks</button>           
+                  <button className="food-filters custom_btn_css food_icon3" onClick={() => changeMenuTabs('meals')}><img className=" h-12" src='../../public/dinner.png'/>Meals</button>           
+                  <button className="food-filters custom_btn_css food_icon4" onClick={() => changeMenuTabs('beverages')}><img className="h-12" src='../../public/beverage.png'/>Beverages</button>   
+                </div>
+
                 <span>
-                <label className="p-2">Sort</label>
-                <select class="border border-black p-2" onChange={(e) => setSortType(e.target.value)}>
-                <option value="high">high-low</option>
-                <option value="low">low-high</option>
+                  <label className="p-2">Sort</label>
+                  <select class="border border-black p-2 custom_sort_css" onChange={(e) => setSortType(e.target.value)}>
+                    <option value="high">high-low</option>
+                    <option value="low">low-high</option>
                 </select>
                 </span>         
             </div>  
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 overflow-y-scroll h-96 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-5 overflow-y-scroll h-96 ">
             {query.length > 0 ?
             filteredData.map(item =>(<FoodCard {...item}  onClick={ () => { info() ;addToCart (item) }} />))
             :     
@@ -121,7 +122,7 @@ const Menutab =()=>
 const FoodCard = ({ img, item_name, description, price,onClick}) => {
 
   return (
-    <div className="inline-block px-2 w-84 rounded-full " >
+    <div className="inline-block px-2 w-84 rounded-full custom_card_css" >
     <div className="w-96 h-84 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-2xl transition-shadow  duration-300 ease-in-out "><div className="bg-white border border-gray-100 transition  duration-700 hover:shadow-xl p-4 rounded-lg">
       <img className=" w-84 h-44 mx-auto transition duration-300 hover:scale-110" src={`data:image/jpeg;base64,${img}`} alt="" />
     <div className="h-36 flex flex-col items-center my-3 space-y-2">

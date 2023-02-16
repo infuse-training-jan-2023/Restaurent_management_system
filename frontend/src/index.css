@@ -13,7 +13,6 @@
     background-color: rgb(255, 245, 235);
   }  
 
-
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -26,10 +25,12 @@ body::-webkit-scrollbar {
 }
 
 .banner {
-  background-image: url('../assets/bg.png');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+}
+.custom_banner_css{
+  background-image: url('./BG3.png')
 }
 .poppins {
   font-family: 'Poppins', sans-serif;
@@ -60,11 +61,54 @@ body::-webkit-scrollbar {
   @apply p-8 hover:border-b-2 hover:border-solid focus:border-b-4 focus:border-solid border-black
 }
 
+.custom_top_options{
+  display: visible;
+}
+
 
 @media only screen and (max-width: 600px) {
-    .custom_h1{
-    font-size: 40px;
-    color: black;
-    font: bolder;
+
+  .custom_h1{
+    @apply text-4xl text-black font-bold    
+  }
+  .food-filters{
+    padding: 3px;
+    justify-content: end;
+  }
+  
+  .custom_btn_css{
+    width:90px;
+    margin: 0px;
+    border: 0px solid;
+   
+  }
+
+  .food_icon4{
+    padding-right: 0px;
+  }
+
+  .custom_sort_css{
+    width: 35px;
+  }
+
+  .custom_card_css{
+    padding-left: 50px;
+  }
+
+  .custom_banner_css{
+    background-image: url('./restaurant-banner.png');
+  }
+
+  .custom_h1{
+    width:400px;
+    padding: 0px;
+    text-align: center;
+    margin-right:-110px;
+    font-size: 50px;
+    background-color: #dcd4d6;
+  }
+
+  .custom_top_options{
+    display: none;
   }
 }

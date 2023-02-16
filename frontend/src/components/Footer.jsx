@@ -7,7 +7,7 @@ const Footer = () => {
 <footer className="bg-black text-white border-t-2 border-black dark:bg-blacks align-center ">
     <div className="grid grid-cols-2 gap-8 px-6 py-8 md:grid-cols-4 justify-center">
     <div >
-            <img className='pl-20 w-84' src={'../../public/logo-new.png'} alt=""></img>
+            <img className=' w-72 mt-10' src={'../../public/logo.jpg'} alt=""></img>
         </div>
         <div className='text-center '>
             <h2 className="mb-6 text-sm font-bold text-white underline underline-offset-2 uppercase dark:text-white-400">Company</h2>
