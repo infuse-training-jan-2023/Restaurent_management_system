@@ -6,8 +6,8 @@ const Banner = ({ scrollToBottom }) => {
     <section className=" mt-32 w-full bg-yellow-50">
       <div className="flex flex-col mt-32 items-end pr-20 justify-center  header-banner bg-cover bg-no-repeat bg-left w-92 h-96 custom_banner_css">
         <div className="px-24 text-center text-3xl md:text-4xl  lg:text-5xl poppins font-bold text-gray-700 mr-10 ">
-          <h1 className="w-3xl text-7xl text-right custom_h1">Best food </h1>
-          <h1 className="w-3xl text-7xl text-right custom_h1">
+          <h1 className="w-3xl text-7xl text-left custom_h1">Best food </h1>
+          <h1 className="w-3xl text-7xl text-left custom_h1">
             waiting for you
           </h1>
         </div>

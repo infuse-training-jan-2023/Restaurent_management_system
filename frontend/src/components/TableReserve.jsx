@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { message } from "antd";
@@ -11,6 +12,13 @@ const ReserveTable = () => {
   const [reservationData, setReservationData] = useState([]);
   const [reservationDate, setReservationDate] = useState(date);
   const [slot, setSlot] = useState("Morning");
+  const {user} = useContext(AuthContext);
+
+  const info = () => {
+    if (user){} 
+    else message.warning("user not logged");
+  };
+
 
   const getdata = () => {
     axios
@@ -35,7 +43,6 @@ const ReserveTable = () => {
     { table_no: 9, capacity: 8, price: 12000 },
   ];
   const reserved = [];
-  const userName = "vibhav";
 
   const reserve_table = () => {
     axios
@@ -97,7 +104,7 @@ const ReserveTable = () => {
             style +
             "w-96 h-40 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-2xl transition-shadow  duration-300 ease-in-out "
           }
-          onClick={() => loadModal(props.data, flag)}
+          onClick={() => {info(); console.log(user); if(user != null) loadModal(props.data, flag);}}
         >
           <h1 className="text-gray-900 text-center poppins text-lg">
             Table No: {props.data.table_no}
@@ -130,7 +137,7 @@ const ReserveTable = () => {
     } else message.warning("Table already Reserved !!!");
   };
   const reserveData = {
-    user_name: userName,
+    user_name: user,
     table_no: tableNo,
     capacity: tableCapacity,
     price: tablePrice,
@@ -196,12 +203,12 @@ const ReserveTable = () => {
                 <form className="text-center">
                   <h2 className="text-lg font-medium mb-6">Reserve Table </h2>
                   <div className="mb-5">
-                    <label className="block mb-2 text-sm font-medium text-black-0">
+                    <label className="block mb-2 text-md font-medium text-black-0">
                       Reserve Table : {tableNo}
                     </label>
                   </div>
                   <div className="mb-6">
-                    <label className="block mb-2 text-sm font-medium text-black">
+                    <label className="block mb-2 text-md font-medium text-black">
                       Price : {tablePrice}
                     </label>
                   </div>
