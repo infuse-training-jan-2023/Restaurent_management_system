@@ -6,7 +6,7 @@ import Menutab from './components/Menutab'
 import Header from './components/Header'
 import {Context} from './context/CartContext'
 import { AuthContext } from './context/AuthContext';
-import OrderMsg from './components/OrderSuccess'
+import ReserveTable from './components/TableReserve'
 
 import "./styles/output.css";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -54,6 +54,7 @@ function App() {
             <Header/>
             <Banner scrollToBottom={scrollToBottom}/>
             <Menutab/>
+            <ReserveTable/>
             <Footer/> 
           </div>
         </Context.Provider>

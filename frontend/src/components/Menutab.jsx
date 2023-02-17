@@ -22,6 +22,8 @@ const Menutab =()=>
             setFood(res.data.data.sort((a,b)=>{
               if (a.price >b.price) return -1;
             }))
+            // sortItems();
+
             console.log(res.data.data);
             console.log(res.data.data);
           })
@@ -58,13 +60,13 @@ const Menutab =()=>
     const changeMenuTabs = (type) => {
         setMenuTab(type)
     }
-    const sortItems = () => {
-      console.log("methodcalled");
-      setFood(foods.sort((a,b)=>{
-        if (a.price < b.price) return -1;
-      }))
-      console.log(foods)
-    }
+    // const sortItems = () => {
+    //   console.log("methodcalled");
+    //   setFood(foods.sort((a,b)=>{
+    //     if (a.price < b.price) return -1;
+    //   }))
+    //   console.log(foods)
+    // }
     const [sortType, setSortType] = useState('albums');
 
     useEffect(() => {
