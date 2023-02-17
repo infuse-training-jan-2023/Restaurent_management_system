@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {message} from 'antd'
 import moment from "moment";
 
 const ReserveTable = () => {
@@ -42,7 +43,7 @@ const ReserveTable = () => {
     axios
       .post("http://localhost:8000/tables", reserveData)
       .then((res) => {
-        alert("Table has been reserved successfully");
+        message.success('Table has been reserved successfully')
         show_modal();
         getdata();
         
@@ -100,8 +101,6 @@ const ReserveTable = () => {
           <img
             src={"table" + props.data.capacity + ".svg"}
             className= " w-36 h-20 mx-auto "
-          
-
           />
           <span className="text-gray-900 ml-2 text-left poppins text-lg">
             Capacity: {props.data.capacity}
@@ -124,7 +123,7 @@ const ReserveTable = () => {
       setPrice(data.price);
       setTableNumber(data.table_no);
       setCapacity(data.capacity);
-    } else alert("Table already Reserved !!!")
+    } else message.warning('Table already Reserved !!!')
   }; 
   const reserveData = {
     user_name: userName,
@@ -140,29 +139,38 @@ const ReserveTable = () => {
   };
 
   return (
-    <section className="bg-orange-50 my-12 py-10   max-w-screen-xl mx-auto px-6">
-      <div className="text-center ml-auto mr-auto w-max ">
-        <DatePicker
-          className=" btn static text-center  "
-          portalId="root-portal"
-          selected={reservationDate}
-          selectsStart
-          dateFormat="dd/MM/yyyy"
-          onChange={(date) => setReservationDate(date)}
-          includeDates={[
-            date,
-            tomorrow.setDate(date.getDate() + 1),
-            tomorrow.setDate(date.getDate() + 2),
-          ]}
-        />
-        <span>
-          <label className="p-2 border-black">Select slot:</label>
-          <select onChange={(e) => setSlot(e.target.value)}>
+    
+    <section className="bg-orange-50 my-12 py-10 max-w-screen-xl mx-auto px-6">
+      <div>
+        <h1 className="text-center text-4xl">
+          Table Reservation
+        </h1>
+      </div>
+      <div className="text-center ml-auto mr-auto w-max flex mt-2">
+        <div className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1 mr-2 custom_tablecss">
+          <label className="p-1 py-3 pl-3 text-sm bg-primary  px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105">Select Date:</label>
+            <DatePicker className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent" portalId="root-portal"
+              selected={reservationDate}
+              selectsStart
+              dateFormat="dd/MM/yyyy"
+              onChange={(date) => setReservationDate(date)}
+              includeDates={[
+                date,
+                tomorrow.setDate(date.getDate() + 1),
+                tomorrow.setDate(date.getDate() + 2),
+              ]}
+            />
+        </div>
+        <div className="ml-5 custom_tablecss">
+        <span className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1">
+          <label className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 ">Select slot:</label>
+          <select className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent" onChange={(e) => setSlot(e.target.value)}>
             <option value="Morning">Morning</option>
             <option value="Afternoon">Afternoon</option>
             <option value="Evening">Evening</option>
           </select>
         </span>
+        </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 overflow-y-scroll h-96">
         {tableData.map((table) => (
@@ -172,7 +180,7 @@ const ReserveTable = () => {
 
       {isShown && (
         <div className="relative">
-          <div className="fixed top-0 left-0 right-0 bottom-0 opacity-100 bg-black z-50">
+          <div className="fixed top-0 left-0 right-0 bottom-0 opacity-100 bg-opacity-60 bg-black z-50">
             <div className="flex items-center justify-center h-full mx-auto">
               <div className="bg-white p-16 rounded-lg shadow-xl">
                 <form className="text-center">
@@ -191,7 +199,7 @@ const ReserveTable = () => {
                     <button
                       type="button"
                       onClick={reserve_table}
-                      className="bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      className="bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
                     >
                       Confirm
                     </button>

@@ -41,7 +41,7 @@ function App() {
 
   const scrollToBottom = () => {
     window.scrollTo({
-      top: document.documentElement.scrollHeight,
+      top: document.documentElement.scrollHeight - 500,
       behavior: 'smooth',
     });
   };

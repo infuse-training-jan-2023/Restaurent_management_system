@@ -44,13 +44,13 @@ const Header = () => {
     setShoworder(false);
   };
   const deleteCartItem = (deleteItem) => {
-    const modifiedData = cartItems.filter((item) => item !== deleteItem);
+    const modifiedData = [...cartItems].filter((item) => item !== deleteItem);
     setCartItems(modifiedData);
     setCartSize(modifiedData.length)
     axios
       .delete(`http://localhost:8000/cart/${user}/${deleteItem.item_name}`)
       .then((res) => {
-        console(res.data.data.items);
+        console.log(res.data.data.items);
       })
       .catch((error) => {
         console.error(error);

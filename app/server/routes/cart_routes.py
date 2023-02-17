@@ -20,16 +20,16 @@ async def get_cart():
     data = await get_all_cart_items()
     if data:
         return ResponseModel(data, 200, "Items displayed Successfully")
-    raise ErrorResponseModel(data, 404, "No items in cart")
+    return ErrorResponseModel(data, 404, "No items in cart")
 
 @router.get("/{user_name}", response_description="get all cart items of a user from database")
 async def get_cart(user_name):
     data = await get_cart_item_by_name(user_name)
     if data:
         return ResponseModel(data, 200, "Items displayed Successfully")
-    raise ErrorResponseModel(data, 404, "User Not Found")
+    return ErrorResponseModel(data, 404, "No items Found in cart")
 
-@router.delete("{user_name}/{item_name}", response_description="deleting an item from database")
+@router.delete("/{user_name}/{item_name}", response_description="deleting an item from database")
 async def delete_items_in_cart(user_name,item_name):
     data = await delete_item_in_cart(user_name, item_name)
     if data != None:

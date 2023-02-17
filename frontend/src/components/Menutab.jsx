@@ -22,8 +22,6 @@ const Menutab =()=>
             setFood(res.data.data.sort((a,b)=>{
               if (a.price >b.price) return -1;
             }))
-            // sortItems();
-
             console.log(res.data.data);
             console.log(res.data.data);
           })
@@ -60,13 +58,7 @@ const Menutab =()=>
     const changeMenuTabs = (type) => {
         setMenuTab(type)
     }
-    // const sortItems = () => {
-    //   console.log("methodcalled");
-    //   setFood(foods.sort((a,b)=>{
-    //     if (a.price < b.price) return -1;
-    //   }))
-    //   console.log(foods)
-    // }
+  
     const [sortType, setSortType] = useState('albums');
 
     useEffect(() => {
@@ -89,9 +81,9 @@ const Menutab =()=>
       return(
     <section className="bg-orange-50 my-12 mt-1 py-10 max-w-screen-xl mx-auto px-6">  
             <div className="flex items-center justify-center space-x-6">
-            <div className="rounded-full p-1 box-border bg-white border border-black overflow-hidden ring-red-300 focus:ring-4 w-96 flex items-center custom_search_css">
-                    <input type="text" className=" rounded-full px-4 focus:outline-none w-full border-solid border-black bg-transparent"value={query} onChange={e => setQuery(e.target.value)} placeholder="search your food....." />
+            <div className="rounded-full p-1 box-border bg-white border border-black overflow-hidden ring-red-300 focus:ring-4 w-82 flex items-center custom_search_css">
                     <button className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 ">Search</button>
+                    <input type="text" className=" rounded-full px-4 focus:outline-none w-full border-solid border-black bg-transparent"value={query} onChange={e => setQuery(e.target.value)} placeholder="search your food....." />
                 </div>
 
                 <div className="flex">
@@ -101,9 +93,9 @@ const Menutab =()=>
                   <button className="food-filters custom_btn_css food_icon4" onClick={() => changeMenuTabs('beverages')}><img className="h-12" src='../../public/beverage.png'/>Beverages</button>   
                 </div>
 
-                <span>
-                  <label className="p-2">Sort</label>
-                  <select class="border border-black p-2 custom_sort_css" onChange={(e) => setSortType(e.target.value)}>
+                <span className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1 custom_sort_css">
+                  <label className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105">Sort</label>
+                  <select class="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent" onChange={(e) => setSortType(e.target.value)}>
                     <option value="high">high-low</option>
                     <option value="low">low-high</option>
                 </select>

@@ -116,4 +116,12 @@ body::-webkit-scrollbar {
   .custom_top_options{
     display: none;
   }
+
+  .custom_tablecss{
+    margin: 0;
+  }
+
+  .custom_sort_css{
+    display: none;
+  }
 }
