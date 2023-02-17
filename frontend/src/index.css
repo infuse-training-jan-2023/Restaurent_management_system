@@ -2,20 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .header-banner {
-    height: 570px !important;
-    width: auto !important;
-    background-repeat: no-repeat;
-    background-position: 120px -20px;
-    background-size: 750px 600px;
-    width: 92em;
-    background-color: rgb(255, 245, 235);
-  }  
+  height: 570px !important;
+  width: auto !important;
+  background-repeat: no-repeat;
+  background-position: 120px -20px;
+  background-size: 750px 600px;
+  width: 92em;
+  background-color: rgb(255, 245, 235);
+}
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -29,15 +28,14 @@ body::-webkit-scrollbar {
   background-position: center center;
   background-size: cover;
 }
-.custom_banner_css{
-  background-image: url('./BG3.png')
-
+.custom_banner_css {
+  background-image: url("./BG3.png");
 }
 .poppins {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 .bg-primary {
-  background:black;
+  background: black;
 }
 .bg-primary-dark {
   background: #ce193c;
@@ -54,74 +52,71 @@ body::-webkit-scrollbar {
 .hide-scroll-bar::-webkit-scrollbar {
   display: visible;
 }
-.btn{
-  @apply text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-blue-300 focus:ring-4 transition duration-300 hover:scale-105
+.btn {
+  @apply text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-blue-300 focus:ring-4 transition duration-300 hover:scale-105;
 }
 
-.food-filters{
-  @apply p-8 hover:border-b-2 hover:border-solid focus:border-b-4 focus:border-solid border-black
+.food-filters {
+  @apply p-8 hover:border-b-2 hover:border-solid focus:border-b-4 focus:border-solid border-black;
 }
 
-.custom_top_options{
+.custom_top_options {
   display: visible;
 }
 
-
 @media only screen and (max-width: 600px) {
-
-  .custom_h1{
-    @apply text-4xl text-black font-bold    
+  .custom_h1 {
+    @apply text-4xl text-black font-bold;
   }
-  .food-filters{
+  .food-filters {
     padding: 3px;
     justify-content: end;
   }
-  
-  .custom_btn_css{
-    width:90px;
+
+  .custom_btn_css {
+    width: 90px;
     margin: 0px;
     border: 0px solid;
-   
   }
 
-  .food_icon4{
+  .food_icon4 {
     padding-right: 0px;
   }
 
-  .custom_sort_css{
+  .custom_sort_css {
     width: 35px;
   }
 
-  .custom_card_css{
+  .custom_card_css {
     padding-left: 50px;
   }
 
-  .custom_banner_css{
-    background-image: url('./restaurant-banner.png');
+  .custom_banner_css {
+    background-image: url("./restaurant-banner.png");
     background-position: left -20px;
   }
 
-  .custom_h1{
-    width:400px;
+  .custom_h1 {
+    width: 400px;
     padding: 0px;
     text-align: center;
-    margin-right:-110px;
+    margin-right: -110px;
     font-size: 50px;
     background-color: #dcd4d6;
   }
 
-  .custom_search_css{
+  .custom_search_css {
     display: none;
   }
-  .custom_top_options{
+  .custom_top_options {
     display: none;
   }
 
-  .custom_tablecss{
+  .custom_tablecss {
     margin: 0;
   }
 
-  .custom_sort_css{
+  .custom_sort_css {
     display: none;
   }
 }

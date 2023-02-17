@@ -3,8 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {message} from 'antd'
-import moment from "moment";
+import { message } from "antd";
 
 const ReserveTable = () => {
   const date = new Date();
@@ -24,7 +23,6 @@ const ReserveTable = () => {
       });
   };
 
-
   const tableData = [
     { table_no: 1, capacity: 2, price: 5000 },
     { table_no: 2, capacity: 2, price: 5000 },
@@ -43,10 +41,9 @@ const ReserveTable = () => {
     axios
       .post("http://localhost:8000/tables", reserveData)
       .then((res) => {
-        message.success('Table has been reserved successfully')
+        message.success("Table has been reserved successfully");
         show_modal();
         getdata();
-        
       })
       .catch((error) => {
         console.log(error);
@@ -87,20 +84,27 @@ const ReserveTable = () => {
     var val = getBgColor(props.data.table_no);
     var style = " ";
     var flag = 0;
-    if(val != undefined) {
-    if (val.includes(true)) {
-      style = "bg-red-100 ";
-      flag = 1;
-    }}
+    if (val != undefined) {
+      if (val.includes(true)) {
+        style = "bg-red-100 ";
+        flag = 1;
+      }
+    }
     return (
       <div className="inline-block  px-2 w-84 ">
-        <div className={style +"w-96 h-40 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-2xl transition-shadow  duration-300 ease-in-out "}   onClick={() => loadModal(props.data, flag)}>
+        <div
+          className={
+            style +
+            "w-96 h-40 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-2xl transition-shadow  duration-300 ease-in-out "
+          }
+          onClick={() => loadModal(props.data, flag)}
+        >
           <h1 className="text-gray-900 text-center poppins text-lg">
             Table No: {props.data.table_no}
           </h1>
           <img
             src={"table" + props.data.capacity + ".svg"}
-            className= " w-36 h-20 mx-auto "
+            className=" w-36 h-20 mx-auto "
           />
           <span className="text-gray-900 ml-2 text-left poppins text-lg">
             Capacity: {props.data.capacity}
@@ -123,8 +127,8 @@ const ReserveTable = () => {
       setPrice(data.price);
       setTableNumber(data.table_no);
       setCapacity(data.capacity);
-    } else message.warning('Table already Reserved !!!')
-  }; 
+    } else message.warning("Table already Reserved !!!");
+  };
   const reserveData = {
     user_name: userName,
     table_no: tableNo,
@@ -139,37 +143,43 @@ const ReserveTable = () => {
   };
 
   return (
-    
     <section className="bg-orange-50 my-12 py-10 max-w-screen-xl mx-auto px-6">
       <div>
-        <h1 className="text-center text-4xl">
-          Table Reservation
-        </h1>
+        <h1 className="text-center text-4xl">Table Reservation</h1>
       </div>
       <div className="text-center ml-auto mr-auto w-max flex mt-2">
         <div className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1 mr-2 custom_tablecss">
-          <label className="p-1 py-3 pl-3 text-sm bg-primary  px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105">Select Date:</label>
-            <DatePicker className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent" portalId="root-portal"
-              selected={reservationDate}
-              selectsStart
-              dateFormat="dd/MM/yyyy"
-              onChange={(date) => setReservationDate(date)}
-              includeDates={[
-                date,
-                tomorrow.setDate(date.getDate() + 1),
-                tomorrow.setDate(date.getDate() + 2),
-              ]}
-            />
+          <label className="p-1 py-3 pl-3 text-sm bg-primary  px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105">
+            Select Date:
+          </label>
+          <DatePicker
+            className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent"
+            portalId="root-portal"
+            selected={reservationDate}
+            selectsStart
+            dateFormat="dd/MM/yyyy"
+            onChange={(date) => setReservationDate(date)}
+            includeDates={[
+              date,
+              tomorrow.setDate(date.getDate() + 1),
+              tomorrow.setDate(date.getDate() + 2),
+            ]}
+          />
         </div>
         <div className="ml-5 custom_tablecss">
-        <span className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1">
-          <label className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 ">Select slot:</label>
-          <select className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent" onChange={(e) => setSlot(e.target.value)}>
-            <option value="Morning">Morning</option>
-            <option value="Afternoon">Afternoon</option>
-            <option value="Evening">Evening</option>
-          </select>
-        </span>
+          <span className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1">
+            <label className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 ">
+              Select slot:
+            </label>
+            <select
+              className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent"
+              onChange={(e) => setSlot(e.target.value)}
+            >
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Evening">Evening</option>
+            </select>
+          </span>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-20 overflow-y-scroll h-96">
