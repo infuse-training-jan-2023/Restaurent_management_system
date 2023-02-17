@@ -12,4 +12,3 @@ class ResponseModel(object):
             "response": self.response,
             "message": self.message
         }
-

@@ -2,13 +2,15 @@ from ._client import get_collection
 
 cart_collection = get_collection("cart")
 
+
 def _cart_helper(cart_items: dict) -> dict:
     return {
         "id": str(cart_items["_id"]),
         "username": cart_items["user_name"],
-        "items": cart_items["items"], # is a lst
+        "items": cart_items["items"],  # is a lst
         "grand_total": cart_items["grand_total"]
     }
+
 
 async def add_to_cart(cart_data: dict) -> dict:
     try:
@@ -16,6 +18,7 @@ async def add_to_cart(cart_data: dict) -> dict:
         return result
     except Exception as e:
         raise Exception("Error: ", e.__format__)
+
 
 async def update_or_add_cart(data: dict) -> dict:
     try:
@@ -63,21 +66,24 @@ async def update_or_add_cart(data: dict) -> dict:
     except Exception as e:
         raise Exception("Error: Item Update failed")
 
+
 async def get_all_cart_items() -> list:
     try:
-        data = [_cart_helper(item) async for item in  cart_collection.find()]
+        data = [_cart_helper(item) async for item in cart_collection.find()]
         return data if data else None
     except Exception as e:
         raise Exception('Error occured: database connection failure')
 
-async def get_cart_item_by_name(user_name: str) -> dict:
-        cart = await cart_collection.find_one({"user_name": user_name})
-        if cart:
-            return _cart_helper(cart)
-        else:
-            return None
 
-async def delete_item_in_cart(username: str, item_name:str) -> dict:
+async def get_cart_item_by_name(user_name: str) -> dict:
+    cart = await cart_collection.find_one({"user_name": user_name})
+    if cart:
+        return _cart_helper(cart)
+    else:
+        return None
+
+
+async def delete_item_in_cart(username: str, item_name: str) -> dict:
     cart = await cart_collection.find_one({"user_name": username})
     if cart:
         item_exists = False
@@ -96,7 +102,7 @@ async def delete_item_in_cart(username: str, item_name:str) -> dict:
                 else:
                     grand_total = sum([item["total"] for item in items])
                     await cart_collection.update_one({"user_name": username}, {"$set": {"items": items, "grand_total": grand_total}})
-                    result  = await cart_collection.find_one({"user_name": username})
+                    result = await cart_collection.find_one({"user_name": username})
                     return {"msg": "Item deleted successfully"}
     else:
         return None

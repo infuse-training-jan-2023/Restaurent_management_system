@@ -16,7 +16,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 app.include_router(cart_router, tags=["Cart"], prefix="/cart")
 app.include_router(checkout_router, tags=["Checkout"], prefix="/checkout")
 app.include_router(table_router, tags=["Tables"], prefix="/tables")

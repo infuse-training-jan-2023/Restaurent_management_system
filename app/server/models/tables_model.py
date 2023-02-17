@@ -1,13 +1,13 @@
 from pydantic import BaseModel, Field
 
+
 class Tables(BaseModel):
     user_name: str = Field(...)
     table_no: int = Field(...)
     capacity: int = Field(...)
     price: int = Field(...)
     date: str = Field(...)
-    slot:str = Field(...)
-
+    slot: str = Field(...)
 
     class Config:
         allow_population_by_field_name = True

@@ -4,6 +4,7 @@ from datetime import datetime
 cart_collection = get_collection("cart")
 order_history = get_collection("orderhistory")
 
+
 async def insert_order_history(order: dict) -> dict:
     try:
         order["date"] = datetime.now()
@@ -11,6 +12,7 @@ async def insert_order_history(order: dict) -> dict:
         return {"Success": "Order history inserted successfully"}
     except Exception as e:
         raise Exception('Error occured: database connection failure')
+
 
 async def delete_cart(user_name: str) -> dict:
     try:

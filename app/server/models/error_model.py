@@ -12,4 +12,3 @@ class ErrorResponseModel(object):
             "error": self.error,
             "message": self.message
         }
-

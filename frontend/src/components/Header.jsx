@@ -39,14 +39,14 @@ const Header = () => {
         console.error(error);
       });
     setCartItems([]);
-    settotal('')
+    settotal("");
     setCartSize(0);
     setShoworder(false);
   };
   const deleteCartItem = (deleteItem) => {
     const modifiedData = cartItems.filter((item) => item !== deleteItem);
     setCartItems(modifiedData);
-    setCartSize(modifiedData.length)
+    setCartSize(modifiedData.length);
     axios
       .delete(`http://localhost:8000/cart/${user}/${deleteItem.item_name}`)
       .then((res) => {
@@ -104,15 +104,13 @@ const Header = () => {
     }
   }, [user, context, showCart]);
 
-
-    const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  
-    const handleClick = () => {
-      setIsVisible(!isVisible);
-    };
 
-    
+  const handleClick = () => {
+    setIsVisible(!isVisible);
+  };
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
@@ -122,10 +120,10 @@ const Header = () => {
       }
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -133,14 +131,18 @@ const Header = () => {
     <>
       <CartContext.Provider value={{ cartItems }}>
         <Context.Provider value={context}>
-          <nav className="flex fixed w-full top-0 items-center justify-between border-white rounded-sm flex-wrap bg-orange-50 p-6"style={{ zIndex:'2'}}>
+          <nav
+            className="flex fixed w-full top-0 items-center justify-between border-white rounded-sm flex-wrap bg-orange-50 p-6"
+            style={{ zIndex: "2" }}
+          >
             <div className="flex items-center flex-shrink-0 text-white mr-6">
               <img src={logo} className="h-20 rounded-full w-48" />
               <span className="font-semibold text-xl tracking-tight"></span>
             </div>
             <div className="block ">
-              <button className="flex items-center px-3 py-2 border rounded text-black border-black hover:text-gray-600 hover:border-black"
-              onClick={handleClick}
+              <button
+                className="flex items-center px-3 py-2 border rounded text-black border-black hover:text-gray-600 hover:border-black"
+                onClick={handleClick}
               >
                 <svg
                   className="fill-current h-3 w-3"
@@ -152,7 +154,10 @@ const Header = () => {
                 </svg>
               </button>
             </div>
-            <div className="w-full block flex-grow sm:flex sm:items-center sm:w-auto custom_top_options" style={{ display: isVisible ? 'flex' : 'none' }}>
+            <div
+              className="w-full block flex-grow sm:flex sm:items-center sm:w-auto custom_top_options"
+              style={{ display: isVisible ? "flex" : "none" }}
+            >
               <div className="text-sm sm:flex-grow ">
                 {!user && (
                   <button
@@ -257,7 +262,10 @@ const Header = () => {
                   onClose={closeCart}
                   open={open}
                 >
-                  <div class="w-3/4 bg-white px-10 py-10" style={{ zIndex:'2'}}>
+                  <div
+                    class="w-3/4 bg-white px-10 py-10"
+                    style={{ zIndex: "2" }}
+                  >
                     <div class="flex justify-between border-b pb-8">
                       <h1 class="font-semibold text-2xl">Cart</h1>
                     </div>

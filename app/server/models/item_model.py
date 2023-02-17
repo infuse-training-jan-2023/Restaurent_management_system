@@ -1,13 +1,14 @@
 from pydantic import BaseModel, Field
 
+
 class Items(BaseModel):
-    item_name : str = Field(...)
-    description : str= Field(...)
-    price : int = Field(...)
-    quantity : int = Field(...)
-    img : str = Field(...)
-    tag : str = Field(...)
-    type : str = Field(...)
+    item_name: str = Field(...)
+    description: str = Field(...)
+    price: int = Field(...)
+    quantity: int = Field(...)
+    img: str = Field(...)
+    tag: str = Field(...)
+    type: str = Field(...)
 
     class Config:
         allow_population_by_field_name = True

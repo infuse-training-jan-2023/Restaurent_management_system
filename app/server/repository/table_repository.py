@@ -2,6 +2,7 @@ from ._client import get_collection
 
 table_collection = get_collection('table')
 
+
 def _table_helper(table_items: dict) -> dict:
     return {
         "id": str(table_items["_id"]),
@@ -13,9 +14,11 @@ def _table_helper(table_items: dict) -> dict:
         "slot": table_items["slot"]
     }
 
+
 async def fetch_all_tables():
-    data = [_table_helper(item) async for item in  table_collection.find()]
+    data = [_table_helper(item) async for item in table_collection.find()]
     return data if data else None
+
 
 async def create_table(table: dict) -> dict:
     try:

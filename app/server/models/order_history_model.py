@@ -1,11 +1,13 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 
+
 class Item(BaseModel):
     item_name: str
     quantity: int
     price: int
     total: int = None
+
 
 class OrderHistory(BaseModel):
     user_name: str = Field(...)
@@ -19,6 +21,6 @@ class OrderHistory(BaseModel):
         schema_extra = {
             "example": {
                 "user_name": "Jane Doe",
-                "items": [{"item_name": "samosa", "quantity":1, "price": 0}]
+                "items": [{"item_name": "samosa", "quantity": 1, "price": 0}]
             }
         }
