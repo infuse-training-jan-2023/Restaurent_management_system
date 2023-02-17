@@ -2,7 +2,7 @@
 import motor.motor_asyncio
 
 def _establish_connection():
-    connection_url = 'mongodb://localhost:27017/'
+    connection_url = 'mongodb+srv://anis:anis%40123@mydb.tpgkpds.mongodb.net'
     client = motor.motor_asyncio.AsyncIOMotorClient(connection_url)
     return client.Restaurant
 

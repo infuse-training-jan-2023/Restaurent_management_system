@@ -1,0 +1,10 @@
+import React from 'react';
+
+export const AuthContext = React.createContext({
+  user: null,
+  signIn: () => {},
+
+ signOut: () => {
+    user:null;
+  }
+});

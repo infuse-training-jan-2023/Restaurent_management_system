@@ -22,9 +22,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 
 @app.get("/tables")
 async def get_tables():
