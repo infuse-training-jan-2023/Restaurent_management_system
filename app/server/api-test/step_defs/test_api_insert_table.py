@@ -15,7 +15,7 @@ booking_details = {
 }
 
 @when('I book a table')
-def display_all_items():
+def reserve_table():
     pytest.api_response = requests.post(add_table_url, json=booking_details)
     print(pytest.api_response)
 
@@ -27,6 +27,20 @@ def check_content_returned():
 @then('api status code should be 200')
 def check_status_code():
     assert pytest.api_response.status_code == 200
+
+@then('api response content type should be application/json')
+def check_content_type():
+    assert pytest.api_response.headers['Content-Type'] == 'application/json'
+
+
+@when('I book a table with invalid request method')
+def invalid_reserve_table():
+    pytest.api_response = requests.delete(add_table_url, json=booking_details)
+    print(pytest.api_response)
+
+@then('api status code should be 405')
+def check_status_code():
+    assert pytest.api_response.status_code == 405
 
 @then('api response content type should be application/json')
 def check_content_type():

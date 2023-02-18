@@ -12,4 +12,4 @@ async def delete_all_items_in_cart(user_name):
     data = await delete_cart(user_name)
     if data != None:
         return ResponseModel(data, 201, "Cart deleted Successfully")
-    return ErrorResponseModel("Not found", 404, "User not found in database")
+    return ErrorResponseModel("Not found", 404, "no items found in cart")

@@ -14,7 +14,7 @@ def _item_helper(items: dict) -> dict:
         "quantity": items["quantity"],
         "img": items["img"],
         "tag": items["tag"],
-        "type": items["tag"]
+        "type": items["type"]
     }
 
 

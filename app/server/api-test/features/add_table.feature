@@ -7,3 +7,8 @@ Feature: Add table
         Then api status code should be 200
         Then api response content type should be application/json
 
+    Scenario: Add table with invalid request
+        When I book a table with invalid request method
+        Then booking should be added to database
+        Then api status code should be 405
+        Then api response content type should be application/json

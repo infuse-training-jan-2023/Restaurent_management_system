@@ -7,3 +7,8 @@ Feature: Add items to cart
         Then items should be added to cart
         Then api status code should be 200
         Then api response content type should be application/json
+
+    Scenario: Add Invalid items to cart
+        When I add invalid items to cart
+        Then api status code should be 405
+        Then api response content type should be application/json

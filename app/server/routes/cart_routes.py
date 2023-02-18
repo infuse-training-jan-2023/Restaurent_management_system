@@ -22,7 +22,7 @@ async def get_cart():
     data = await get_all_cart_items()
     if data:
         return ResponseModel(data, 200, "Items displayed Successfully")
-    raise ErrorResponseModel(data, 404, "No items in cart")
+    return ErrorResponseModel(data, 404, "No items in cart")
 
 
 @router.get("/{user_name}", response_description="get all cart items of a user from database")

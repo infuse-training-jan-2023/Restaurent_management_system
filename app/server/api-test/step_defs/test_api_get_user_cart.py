@@ -27,3 +27,35 @@ def check_status_code():
 @then('api response content type should be application/json')
 def check_content_type():
     assert pytest.api_response.headers['Content-Type'] == 'application/json'
+
+
+@when('I give the username with empty')
+def get_my_cart():
+    pytest.api_response = requests.get(cart_url)
+    print(pytest.api_response)
+
+
+@then('api status code should be 200')
+def check_status_code():
+    assert pytest.api_response.status_code == 200
+
+
+@then('api response content type should be application/json')
+def check_content_type():
+    assert pytest.api_response.headers['Content-Type'] == 'application/json'
+
+
+@when('I give the username with inavlid method')
+def get_my_cart():
+    pytest.api_response = requests.post(cart_url)
+    print(pytest.api_response)
+
+
+@then('api status code should be 405')
+def check_status_code():
+    assert pytest.api_response.status_code == 405
+
+
+@then('api response content type should be application/json')
+def check_content_type():
+    assert pytest.api_response.headers['Content-Type'] == 'application/json'

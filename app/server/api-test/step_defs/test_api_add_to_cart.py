@@ -33,3 +33,23 @@ def check_status_code():
 @then('api response content type should be application/json')
 def check_content_type():
     assert pytest.api_response.headers['Content-Type'] == 'application/json'
+
+
+
+@when('I add invalid items to cart')
+def invalid_order_food():
+    pytest.api_response = requests.put(cart_url, json=cart_data)
+    print(pytest.api_response)
+
+@then('items should be added to cart')
+def check_content_returned():
+    data = pytest.api_response.json()
+    assert type(data) == dict
+
+@then('api status code should be 405')
+def check_status_code():
+    assert pytest.api_response.status_code == 405
+
+@then('api response content type should be application/json')
+def check_content_type():
+    assert pytest.api_response.headers['Content-Type'] == 'application/json'

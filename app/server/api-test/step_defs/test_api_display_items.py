@@ -23,3 +23,17 @@ def check_status_code():
 @then('api response content type should be application/json')
 def check_content_type():
     assert pytest.api_response.headers['Content-Type'] == 'application/json'
+
+
+@when('I fetch the items with method change')
+def display_all_items():
+    pytest.api_response = requests.put(display_item_url)
+    print(pytest.api_response)
+
+@then('api status code should be 405')
+def check_status_code():
+    assert pytest.api_response.status_code == 405
+
+@then('api response content type should be application/json')
+def check_content_type():
+    assert pytest.api_response.headers['Content-Type'] == 'application/json'

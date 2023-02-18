@@ -24,3 +24,31 @@ def check_status_code():
 @then('api response content type should be application/json')
 def check_content_type():
     assert pytest.api_response.headers['Content-Type'] == 'application/json'
+
+
+@when('user try to checkout before adding items into cart')
+def checkout_items():
+    pytest.api_response = requests.delete(checkout_url)
+    print(pytest.api_response)
+
+@then('api status code should be 200')
+def check_status_code():
+    assert pytest.api_response.status_code == 200
+
+@then('api response content type should be application/json')
+def check_content_type():
+    assert pytest.api_response.headers['Content-Type'] == 'application/json'
+
+
+@when('user tries to change checkout method')
+def checkout_items():
+    pytest.api_response = requests.get(checkout_url)
+    print(pytest.api_response)
+
+@then('api status code should be 405')
+def check_status_code():
+    assert pytest.api_response.status_code == 405
+
+@then('api response content type should be application/json')
+def check_content_type():
+    assert pytest.api_response.headers['Content-Type'] == 'application/json'
