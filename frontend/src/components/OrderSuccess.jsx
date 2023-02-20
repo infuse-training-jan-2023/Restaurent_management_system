@@ -46,7 +46,7 @@ const OrderMsg = ({ onClick }) => {
         <button
           className="relative ml-10 left-20 bg-red-500 hover:bg-red-400 text-white font-medium py-2 px-7 rounded focus:outline-none focus:shadow-outline"
           onClick={cancleOrder}>
-          cancle
+          cancel
         </button>
         </div>
       </div>
