@@ -35,21 +35,20 @@ const OrderMsg = ({ onClick }) => {
         <div className="absolute inset-1 bg-black opacity-75"></div>
       </div>
       <div className="bg-white text-lg rounded-lg px-14 p-10 items-center overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-        <h1>Name: {user}</h1>
-        <h1>Total Price: {total}</h1>
-        <button
-          className="relative left-40 bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-7 rounded focus:outline-none focus:shadow-outline"
-          onClick={()=>{setOrderConfirmation(true)}}
-        >
+        <h1 className="text-center" >Name: <span className="uppercase font-semibold">{user}</span></h1>
+        <h1 className="text-center">Total Price:<span className="pl-2 font-semibold">&#8377; {total}</span> </h1>
+        <div className="py-4">
+        <button 
+          className="relative bg-teal-500 left-14 hover:bg-teal-400 text-white font-medium py-2 px-7 rounded focus:outline-none focus:shadow-outline"
+          onClick={()=>{setOrderConfirmation(true)}}>
           confirm
         </button>
         <button
-          className="relative left-40 bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-7 rounded focus:outline-none focus:shadow-outline"
-          onClick={cancleOrder}
-
-                  >
+          className="relative ml-10 left-20 bg-red-500 hover:bg-red-400 text-white font-medium py-2 px-7 rounded focus:outline-none focus:shadow-outline"
+          onClick={cancleOrder}>
           cancle
         </button>
+        </div>
       </div>
     </div>}
     

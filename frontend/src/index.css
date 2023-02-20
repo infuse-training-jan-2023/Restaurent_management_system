@@ -57,8 +57,10 @@ body::-webkit-scrollbar {
 }
 
 .food-filters {
-  @apply p-8 hover:border-b-2 hover:border-solid focus:border-b-4 focus:border-solid border-black;
+  @apply p-8 transition duration-300 hover:scale-110 hover:border-solid focus:border-b-4 focus:border-solid border-black text-left;
 }
+
+
 
 .custom_top_options {
   display: visible;

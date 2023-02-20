@@ -14,7 +14,6 @@ const Menutab = () => {
 
   const fetchData = async () => {
     axios.get("http://localhost:8000/items").then((res) => {
-      setFood(res.data.data);
       setFood(
         res.data.data.sort((a, b) => {
           if (a.price > b.price) return -1;
@@ -102,7 +101,7 @@ const Menutab = () => {
             onClick={() => changeMenuTabs("all")}
           >
             <img className=" h-12" src="../../public/breakfast.png" />
-            All
+            <span className="pl-3">All</span>
           </button>
           <button
             className="food-filters custom_btn_css food_icon2"
@@ -178,11 +177,12 @@ const Menutab = () => {
   );
 };
 
-const FoodCard = ({ img, item_name, description, price, onClick }) => {
+const FoodCard = ({ img, item_name, type, price, onClick }) => {
   return (
     <div className="inline-block px-2 w-84 rounded-full custom_card_css">
       <div className="w-96 h-84 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-2xl transition-shadow  duration-300 ease-in-out ">
         <div className="bg-white border border-gray-100 transition  duration-700 hover:shadow-xl p-4 rounded-lg">
+          <div className="w-4 ">{type=='veg'? <img src='/veg.png'/>:<img src='/non-veg.png'/>}</div>
           <img
             className=" w-84 h-44 mx-auto transition duration-300 hover:scale-110"
             src={`data:image/jpeg;base64,${img}`}

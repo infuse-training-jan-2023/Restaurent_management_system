@@ -172,7 +172,7 @@ const Header = () => {
               {user && (
                 <span>
                   <div className="text-3xl font-medium text-white-900 px-4 block poppins rounded-full mt-4 sm:inline-block sm:mt-0 text-black">
-                    Hi {user}{" "}
+                    Hi <span className="uppercase mr-2">{user}</span>
                     <span>
                       <Avatar
                         size="large"
