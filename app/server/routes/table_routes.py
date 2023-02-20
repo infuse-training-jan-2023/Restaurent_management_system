@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Body
-from server.models.tables_model import Tables
+from server.models.tables_model import Tables, DeleteTables
 from server.models.response_model import ResponseModel
 from server.models.error_model import ErrorResponseModel
 from server.repository.table_repository import *
@@ -21,3 +21,12 @@ async def post_table(table: Tables = Body(...)):
     if data:
         return ResponseModel(data, 201, "Table added Successfully")
     return ErrorResponseModel(data, 400, "Could not create table")
+
+@router.put("")
+async def delete_table_reservation(table: DeleteTables = Body(...)):
+    table = jsonable_encoder(table)
+    data = await delete_table(table)
+    if data:
+        return ResponseModel(data, 200, "Table Deleted Successfully") 
+    return ErrorResponseModel(data,404, "Could not delete the record in tables")
+
