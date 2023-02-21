@@ -192,15 +192,23 @@ const ReserveTable = () => {
     setIsShown((current) => !current);
   };
 
-  // const getTime = (time) => {
+  const getTime = (time) => {
+    if (reservationDate.toLocaleDateString() > date.toLocaleDateString() ) {
+      return false;
+    }
 
-  //   if(date.toLocaleDateString+time<reservationDate.toLocaleDateString+reservationDate.toLocaleTimeString('en-us',{ hour12: false })){
-  //     return true}
-  //   else{ false}
-  // }
-  // const show_cancel = () => {
-  //   setCancel((current) => !current);
-  // };
+    if (
+      time < reservationDate.toLocaleTimeString("en-us", { hour12: false })
+    ) {
+      return true;
+    } else {
+      false;
+    }
+  };
+
+  const show_cancel = () => {
+    setCancel((current) => !current);
+  };
 
   return (
     <section className="bg-orange-50 my-12 py-10 max-w-screen-xl mx-auto px-6">
@@ -235,16 +243,10 @@ const ReserveTable = () => {
               className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent"
               onChange={(e) => setSlot(e.target.value)}
             >
-                 {/* { !getTime('22:00:00') ?
-             <option value="Morning" >Morning</option> :  <option value="Evening">Evening</option> }
-              
-              { !getTime('12:00:00') ? <option value="Morning" >Morning</option> :
-              <option value="Afternoon">Afternoon</option>}
-              { !getTime('16:00:00') ? <option value="Afternoon">Afternoon</option> :
-              <option value="Evening">Evening</option> } */}
-               <option value="Morning" >Morning</option>
-               <option value="Afternoon">Afternoon</option>
-               <option value="Evening">Evening</option>
+                 
+               {!getTime('12:00:00') ? <option value="Morning"  >Morning</option> : ""}
+               {!getTime('16:00:00') ? <option value="Afternoon">Afternoon</option> : ""}
+               {!getTime('23:00:00') ? <option value="Evening">Evening</option>: ""}
            
             </select>
           </span>
