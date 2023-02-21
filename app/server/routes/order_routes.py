@@ -6,7 +6,7 @@ from fastapi import Body, APIRouter
 
 router = APIRouter()
 
-@router.get("{user_name}", response_description="get all orders of a user from database")
+@router.get("/{user_name}", response_description="get all orders of a user from database")
 async def get_orders(user_name):
     data = await get_orders_by_name(user_name)
     if data:

@@ -90,7 +90,9 @@ body::-webkit-scrollbar {
   }
 
   .custom_card_css {
-    padding-left: 50px;
+    margin-left: auto;
+    margin-right: auto;
+
   }
 
   .custom_banner_css {
@@ -120,5 +122,27 @@ body::-webkit-scrollbar {
 
   .custom_sort_css {
     display: none;
+  }
+
+  .custom_tablereserve_header {
+    padding: 0px !important;
+  }
+
+  .custom_label{
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .custom_table_card{
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .custom_reserve_table{
+    margin-right: 5px;
+  }
+
+  .custom_food_text{
+    margin-right: -191px;
   }
 }

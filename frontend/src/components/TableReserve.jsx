@@ -98,7 +98,7 @@ const ReserveTable = () => {
       }
     }
     return (
-      <div className="inline-block  px-2 w-84 ">
+      <div className="inline-block px-2 w-84 custom_table_card">
         <div
           className={
             style +
@@ -144,19 +144,19 @@ const ReserveTable = () => {
     date: reservationDate,
     slot: slot,
   };
-
+ 
   const show_modal = () => {
     setIsShown((current) => !current);
   };
 
   return (
-    <section className="bg-orange-50 my-12 py-10 max-w-screen-xl mx-auto px-6">
+    <section className="bg-orange-50 my-12 py-10 max-w-screen-xl mx-auto px-6 custom_tablereserve_header">
       <div>
         <h1 className="text-center text-4xl">Table Reservation</h1>
       </div>
       <div className="text-center ml-auto mr-auto w-max flex mt-2">
         <div className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1 mr-2 custom_tablecss">
-          <label className="p-1 py-3 pl-3 text-sm bg-primary  px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105">
+          <label className="p-1 py-3 pl-3 text-sm bg-primary px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 custom_label">
             Select Date:
           </label>
           <DatePicker
@@ -175,7 +175,7 @@ const ReserveTable = () => {
         </div>
         <div className="ml-5 custom_tablecss">
           <span className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1">
-            <label className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 ">
+            <label className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 custom_label">
               Select slot:
             </label>
             <select
