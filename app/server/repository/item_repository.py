@@ -28,7 +28,7 @@ async def insert_items():
         {"item_name":"sprite", "description": "The dish consists of a deep fried potato dumpling placed inside a bread bun.","price":30,"quantity":2,"img": vadapav,"tag":"snacks","type":"veg"}
     ]
     item = item_collection.insert_many(items)
-    return ('Item add seccessfully')
+    return ('Items added successfully')
 
 async def fetch_all_items() -> list:
     try:
