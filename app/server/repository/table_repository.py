@@ -22,3 +22,12 @@ async def create_table(table: dict) -> dict:
     result = await table_collection.insert_one(table)
     result = await table_collection.find_one({"_id": result.inserted_id})
     return _table_helper(result)
+
+async def delete_table(tables):
+    table_no = tables["table_no"]
+    user_name = tables["user_name"]
+    date = tables["date"]
+    slot = tables["slot"]
+    data = await table_collection.delete_one({'user_name':user_name,'table_no':table_no,'date':date,'slot':slot})
+    print(data.deleted_count)
+    return True if data.deleted_count == 1 else False

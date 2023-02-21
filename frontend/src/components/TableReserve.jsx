@@ -13,6 +13,7 @@ const ReserveTable = () => {
   const [reservationDate, setReservationDate] = useState(date);
   const [slot, setSlot] = useState("Morning");
   const {user} = useContext(AuthContext);
+  const [cancel, setCancel] = useState(false);
 
   const info = () => {
     if (user){} 
@@ -56,6 +57,11 @@ const ReserveTable = () => {
         console.log(error);
       });
   };
+
+ 
+  
+
+
   const getBgColor = (val) => {
     reserved.splice(0, reserved.length);
     if (reservationData != null) {
@@ -65,7 +71,7 @@ const ReserveTable = () => {
             reservationDate.toISOString().substring(0, 10) ==
             data.date.substring(0, 10)
           ) {
-            reserved.push(data.table_no);
+            reserved.push({"table_no": data.table_no, "user_name":data.user_name});
           }
         }
       });
@@ -74,7 +80,7 @@ const ReserveTable = () => {
     let x;
     if (reserved.length > 0) {
       x = reserved.map((r) => {
-        if (r == val) {
+        if (r.table_no == val) {
           return true;
         } else return false;
       });
@@ -104,7 +110,7 @@ const ReserveTable = () => {
             style +
             "w-96 h-40 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-2xl transition-shadow  duration-300 ease-in-out "
           }
-          onClick={() => {info(); console.log(user); if(user != null) loadModal(props.data, flag);}}
+          onClick={() => {info(); if(user != null) loadModal(props.data, flag);}}
         >
           <h1 className="text-gray-900 text-center poppins text-lg">
             Table No: {props.data.table_no}
@@ -116,9 +122,12 @@ const ReserveTable = () => {
           <span className="text-gray-900 ml-2 text-left poppins text-lg">
             Capacity: {props.data.capacity}
           </span>
-          <span className="text-gray-900 ml-24 poppins text-xl font-semibold">
+          <button className={checkUser(props.data.table_no).includes(true) ? "border border-red-500 bg-red-300  w-fit h-fit ml-2 mr-2 p-1 rounded " :" invisible"} onClick={ ()=> show_cancel()} >Cancel</button>
+
+          <span className="text-gray-900 ml-22 poppins text-xl font-semibold">
             &#8377;{props.data.price}
           </span>
+        
         </div>
       </div>
     );
@@ -128,14 +137,28 @@ const ReserveTable = () => {
   const [tablePrice, setPrice] = useState();
   const [tableCapacity, setCapacity] = useState();
   const [isShown, setIsShown] = useState(false);
+ // const[show_cancel_btn,setShowCancelBtn]=useState("hidden ")
   const loadModal = (data, flag) => {
+    setPrice(data.price);
+    setTableNumber(data.table_no);
+    setCapacity(data.capacity);
     if (!flag == 1) {
       setIsShown(true);
-      setPrice(data.price);
-      setTableNumber(data.table_no);
-      setCapacity(data.capacity);
-    } else message.warning("Table already Reserved !!!");
+     
+    } else {
+      if(!checkUser(data.table_no).includes(true))
+      message.warning("Table already Reserved !!!");
+    }
   };
+
+  const checkUser = (dtable_no) =>{
+    let x;
+    x= reserved.map((r)=>{
+      if(r.table_no == dtable_no && user == r.user_name)
+       return true
+    }) 
+    return x
+  }
   const reserveData = {
     user_name: user,
     table_no: tableNo,
@@ -144,10 +167,40 @@ const ReserveTable = () => {
     date: reservationDate,
     slot: slot,
   };
- 
+
+  const deleteData = {
+    
+      user_name:user,
+      table_no:tableNo,
+      date: reservationDate,
+      slot:slot,
+    
+  };
+
+  const delete_reservation = () =>{
+    axios.put("http://localhost:8000/tables", deleteData)
+    .then((res)=>{
+      message.success("Deleted reservation successfully");
+      window.location.reload()
+      show_cancel();})
+    .catch((error) =>{
+      console.log(error);
+    });
+    }
+
   const show_modal = () => {
     setIsShown((current) => !current);
   };
+
+  // const getTime = (time) => {
+
+  //   if(date.toLocaleDateString+time<reservationDate.toLocaleDateString+reservationDate.toLocaleTimeString('en-us',{ hour12: false })){
+  //     return true}
+  //   else{ false}
+  // }
+  // const show_cancel = () => {
+  //   setCancel((current) => !current);
+  // };
 
   return (
     <section className="bg-orange-50 my-12 py-10 max-w-screen-xl mx-auto px-6 custom_tablereserve_header">
@@ -182,9 +235,17 @@ const ReserveTable = () => {
               className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent"
               onChange={(e) => setSlot(e.target.value)}
             >
-              <option value="Morning">Morning</option>
-              <option value="Afternoon">Afternoon</option>
-              <option value="Evening">Evening</option>
+                 {/* { !getTime('22:00:00') ?
+             <option value="Morning" >Morning</option> :  <option value="Evening">Evening</option> }
+              
+              { !getTime('12:00:00') ? <option value="Morning" >Morning</option> :
+              <option value="Afternoon">Afternoon</option>}
+              { !getTime('16:00:00') ? <option value="Afternoon">Afternoon</option> :
+              <option value="Evening">Evening</option> } */}
+               <option value="Morning" >Morning</option>
+               <option value="Afternoon">Afternoon</option>
+               <option value="Evening">Evening</option>
+           
             </select>
           </span>
         </div>
@@ -224,6 +285,41 @@ const ReserveTable = () => {
                       type="button"
                       onClick={show_modal}
                       className="text-sm font-medium text-teal-500 hover:text-teal-400"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {cancel && (
+        <div className="relative">
+          <div className="fixed top-0 left-0 right-0 bottom-0 opacity-100 bg-opacity-60 bg-black z-50">
+            <div className="flex items-center justify-center h-full mx-auto">
+              <div className="bg-white p-16 rounded-lg shadow-xl">
+                <form className="text-center">
+                  <h2 className="text-lg font-medium mb-6">Cancel Table Reservation </h2>
+                  <div className="mb-6">
+                    <label className="block mb-2 text-md font-medium text-black">
+                      Are you sure you want to cancel the reservation?
+                    </label>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={delete_reservation}
+                      className="bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
+                    >
+                      Confirm 
+                    </button>
+                    <button
+                      type="button"
+                      onClick={show_cancel}
+                      className="text-sm  font-medium text-red-500 hover:text-red-400"
                     >
                       Cancel
                     </button>
