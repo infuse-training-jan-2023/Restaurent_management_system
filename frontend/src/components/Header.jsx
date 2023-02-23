@@ -5,7 +5,7 @@ import { Avatar, Badge } from "antd";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../context/CartContext";
 import axios from "axios";
-import CartItem from "./Cart";
+import CartItem from "./cart";
 import OrderMsg from "./OrderSuccess";
 import { AuthContext } from "../context/AuthContext";
 import { Drawer } from "antd";
