@@ -23,7 +23,7 @@ const ReserveTable = () => {
 
   const getdata = () => {
     axios
-      .get("http://localhost:8000/tables")
+      .get("http://localhost:8000/api/tables")
       .then((res) => {
         setReservationData(res.data.data);
       })
@@ -47,7 +47,7 @@ const ReserveTable = () => {
 
   const reserve_table = () => {
     axios
-      .post("http://localhost:8000/tables", reserveData)
+      .post("http://localhost:8000/api/tables", reserveData)
       .then((res) => {
         message.success("Table has been reserved successfully");
         show_modal();
@@ -180,7 +180,7 @@ const ReserveTable = () => {
   };
 
   const delete_reservation = () =>{
-    axios.put("http://localhost:8000/tables", deleteData)
+    axios.put("http://localhost:8000/api/tables", deleteData)
     .then((res)=>{
       message.success("Deleted reservation successfully");
       window.location.reload()
@@ -244,8 +244,7 @@ const ReserveTable = () => {
             <select
               className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent"
               onChange={(e) => setSlot(e.target.value)}
-            >
-                 
+            >   
                {!getTime('12:00:00') ? <option value="Morning"  >Morning</option> : ""}
                {!getTime('16:00:00') ? <option value="Afternoon">Afternoon</option> : ""}
                {!getTime('23:00:00') ? <option value="Evening">Evening</option>: ""}

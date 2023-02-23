@@ -12,7 +12,7 @@ const OrderMsg = ({ onClick }) => {
   const [total, settotal] =useState('')
   useEffect(() => {
       axios
-        .get(`http://localhost:8000/cart/${user}`)
+        .get(`http://localhost:8000/api/cart/${user}`)
         .then((res) => {
           settotal(res.data.data.grand_total);
         })

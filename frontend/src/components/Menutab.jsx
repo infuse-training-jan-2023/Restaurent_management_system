@@ -13,7 +13,7 @@ const Menutab = () => {
   const { user } = useContext(AuthContext);
 
   const fetchData = async () => {
-    axios.get("http://localhost:8000/items").then((res) => {
+    axios.get("http://localhost:8000/api/items").then((res) => {
       setFood(
         res.data.data.sort((a, b) => {
           if (a.price > b.price) return -1;
@@ -37,7 +37,7 @@ const Menutab = () => {
       };
 
       axios
-        .post("http://localhost:8000/cart", cartItem)
+        .post("http://localhost:8000/apicart", cartItem)
         .then((res) => {
           console.log(res.data.data);
         })

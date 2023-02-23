@@ -23,7 +23,7 @@ function CartItem({ item, onClick }) {
     };
 
     axios
-      .post("http://localhost:8000/cart", cartItem)
+      .post("http://localhost:8000/api/cart", cartItem)
       .then((res) => {
         console.log(res.data);
       })
