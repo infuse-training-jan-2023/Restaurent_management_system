@@ -160,7 +160,7 @@ const Header = () => {
               <div className="text-sm sm:flex-grow flex justify-end">
                 {!user && (
                   <button
-                    className="bg-primary px-6 py-3 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-3 mr-2 custom_top_options"
+                    className="bg-primary px-6 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-3 mr-2 custom_top_options"
                     onClick={show_login_modal}
                   >
                     SignIn
@@ -181,7 +181,7 @@ const Header = () => {
                     </span>
                   </div>
                   <button
-                    className="bg-primary px-6 py-3 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-3 mr-2 "
+                    className="bg-primary px-6 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-3 mr-2 "
                     onClick={log_out}
                   >
                     Logout
@@ -192,7 +192,7 @@ const Header = () => {
               <div>
                 <Badge count={user ? cartsize : 0}>
                   <button
-                    className=" bg-primary px-6 py-3 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-4"
+                    className=" bg-primary px-6 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-4"
                     onClick={show_cart_modal}
                   >
                     <FaShoppingCart />
@@ -274,13 +274,13 @@ const Header = () => {
                       <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
                         Product Details
                       </h3>
-                      <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
+                      <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
                         Quantity
                       </h3>
-                      <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
+                      <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
                         Price
                       </h3>
-                      <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">
+                      <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
                         Total
                       </h3>
                     </div>
