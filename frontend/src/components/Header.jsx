@@ -33,7 +33,7 @@ const Header = () => {
     axios
       .delete(`http://localhost:8000/checkout/${user}`)
       .then((res) => {
-        console(res.data.data.items);
+        console.log(res.data.data.items);
       })
       .catch((error) => {
         console.error(error);
@@ -139,9 +139,9 @@ const Header = () => {
               <img src={logo} className="h-20 rounded-full w-48" />
               <span className="font-semibold text-xl tracking-tight"></span>
             </div>
-            <div className="block ">
+            <div className="flex">
               <button
-                className="flex items-center px-3 py-2 border rounded text-black border-black hover:text-gray-600 hover:border-black"
+                className="flex items-center px-3 py-2 border rounded text-black border-black hover:text-gray-600 hover:border-black mr-3"
                 onClick={handleClick}
               >
                 <svg
@@ -153,12 +153,11 @@ const Header = () => {
                   <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
                 </svg>
               </button>
-            </div>
-            <div
-              className="w-full block flex-grow sm:flex sm:items-center sm:w-auto custom_top_options"
+
+            <div className="w-full block flex-grow sm:flex sm:items-center sm:w-auto custom_top_options "
               style={{ display: isVisible ? "flex" : "none" }}
             >
-              <div className="text-sm sm:flex-grow ">
+              <div className="text-sm sm:flex-grow flex justify-end">
                 {!user && (
                   <button
                     className="bg-primary px-6 py-3 text-white poppins rounded-full ring-blue-300 focus:outline-none focus:ring-4 transform transition duration-700 hover:scale-105 py-3 mr-2 custom_top_options"
@@ -200,6 +199,7 @@ const Header = () => {
                   </button>
                 </Badge>
               </div>
+            </div>
             </div>
 
             {isShown && (

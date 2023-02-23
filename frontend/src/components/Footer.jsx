@@ -8,7 +8,7 @@ const Footer = () => {
           <div>
             <img
               className=" w-72 mt-10 rounded-3xl"
-              src={"../../public/logo.jpg"}
+              src={"/logo.jpg"}
               alt=""
             ></img>
           </div>

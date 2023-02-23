@@ -63,6 +63,7 @@ async def update_or_add_cart(data: dict) -> dict:
     except Exception as e:
         raise Exception("Error: ",e)
 
+
 async def get_all_cart_items() -> list:
     try:
         data = [_cart_helper(item) async for item in  cart_collection.find()]

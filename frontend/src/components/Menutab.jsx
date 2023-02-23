@@ -100,28 +100,28 @@ const Menutab = () => {
             className="food-filters custom_btn_css food_icon1"
             onClick={() => changeMenuTabs("all")}
           >
-            <img className=" h-12" src="../../public/breakfast.png" />
+            <img className=" h-12" src="/breakfast.png" />
             <span className="pl-3">All</span>
           </button>
           <button
             className="food-filters custom_btn_css food_icon2"
             onClick={() => changeMenuTabs("snacks")}
           >
-            <img className=" h-12" src="../../public/burger.png" />
+            <img className=" h-12" src="/burger.png" />
             Snacks
           </button>
           <button
             className="food-filters custom_btn_css food_icon3"
             onClick={() => changeMenuTabs("meals")}
           >
-            <img className=" h-12" src="../../public/dinner.png" />
+            <img className=" h-12" src="/dinner.png" />
             Meals
           </button>
           <button
             className="food-filters custom_btn_css food_icon4"
             onClick={() => changeMenuTabs("beverages")}
           >
-            <img className="h-12" src="../../public/beverage.png" />
+            <img className="h-12" src="/beverage.png" />
             Beverages
           </button>
         </div>

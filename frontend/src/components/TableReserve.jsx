@@ -104,7 +104,7 @@ const ReserveTable = () => {
       }
     }
     return (
-      <div className="inline-block px-2 w-84 custom_table_card">
+      <div className="inline-block  px-2 w-84 ">
         <div
           className={
             style +
@@ -112,24 +112,26 @@ const ReserveTable = () => {
           }
           onClick={() => {info(); if(user != null) loadModal(props.data, flag);}}
         >
-          <h1 className="text-gray-900 text-center poppins text-lg">
+          <h1 className="text-gray-900 text-center  poppins text-lg">
             Table No: {props.data.table_no}
           </h1>
           <img
             src={"table" + props.data.capacity + ".svg"}
             className=" w-36 h-20 mx-auto "
           />
-          <span className="text-gray-900 ml-2 text-left poppins text-lg">
-            Capacity: {props.data.capacity}
-          </span>
-          <button className={checkUser(props.data.table_no).includes(true) ? "border border-red-500 bg-red-300  w-fit h-fit ml-2 mr-2 p-1 rounded " :" invisible"} onClick={ ()=> show_cancel()} >Cancel</button>
+          <div className="text-center justify-start">
+            <span className="text-gray-900 mr-6  poppins text-lg">
+              Capacity: {props.data.capacity}
+            </span>
+            <button className={checkUser(props.data.table_no).includes(true) ? "border border-red-500 bg-red-300  w-fit h-fit mr-6  p-1 rounded " :" invisible"} onClick={ ()=> show_cancel()} >Cancel</button>
 
-          <span className="text-gray-900 ml-22 poppins text-xl font-semibold">
-            &#8377;{props.data.price}
-          </span>
+            <span className="text-gray-900 ml-22 poppins text-xl  font-semibold">
+              &#8377;{props.data.price}
+            </span>
+            </div>
+          </div>
         
         </div>
-      </div>
     );
   };
 
@@ -192,24 +194,32 @@ const ReserveTable = () => {
     setIsShown((current) => !current);
   };
 
-  // const getTime = (time) => {
+  const getTime = (time) => {
+    if (reservationDate.toLocaleDateString() > date.toLocaleDateString() ) {
+      return false;
+    }
 
-  //   if(date.toLocaleDateString+time<reservationDate.toLocaleDateString+reservationDate.toLocaleTimeString('en-us',{ hour12: false })){
-  //     return true}
-  //   else{ false}
-  // }
-  // const show_cancel = () => {
-  //   setCancel((current) => !current);
-  // };
+    if (
+      time < reservationDate.toLocaleTimeString("en-us", { hour12: false })
+    ) {
+      return true;
+    } else {
+      false;
+    }
+  };
+
+  const show_cancel = () => {
+    setCancel((current) => !current);
+  };
 
   return (
-    <section className="bg-orange-50 my-12 py-10 max-w-screen-xl mx-auto px-6 custom_tablereserve_header">
+    <section className="bg-orange-50 my-12 py-10 max-w-screen-xl mx-auto px-6">
       <div>
         <h1 className="text-center text-4xl">Table Reservation</h1>
       </div>
       <div className="text-center ml-auto mr-auto w-max flex mt-2">
         <div className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1 mr-2 custom_tablecss">
-          <label className="p-1 py-3 pl-3 text-sm bg-primary px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 custom_label">
+          <label className="p-1 py-3 pl-3 text-sm bg-primary  px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105">
             Select Date:
           </label>
           <DatePicker
@@ -228,23 +238,17 @@ const ReserveTable = () => {
         </div>
         <div className="ml-5 custom_tablecss">
           <span className="rounded-full box-border bg-white border border-black overflow-hidden flex items-center p-1">
-            <label className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 custom_label">
+            <label className="text-sm bg-primary py-3 px-6 rounded-full text-white poppins ring-red-300 focus:ring-4 transition duration-300 hover:scale-105 ">
               Select slot:
             </label>
             <select
               className="text-center w-28 p-1 py-2 rounded-full focus:outline-none border-solid border-black bg-transparent"
               onChange={(e) => setSlot(e.target.value)}
             >
-                 {/* { !getTime('22:00:00') ?
-             <option value="Morning" >Morning</option> :  <option value="Evening">Evening</option> }
-              
-              { !getTime('12:00:00') ? <option value="Morning" >Morning</option> :
-              <option value="Afternoon">Afternoon</option>}
-              { !getTime('16:00:00') ? <option value="Afternoon">Afternoon</option> :
-              <option value="Evening">Evening</option> } */}
-               <option value="Morning" >Morning</option>
-               <option value="Afternoon">Afternoon</option>
-               <option value="Evening">Evening</option>
+                 
+               {!getTime('12:00:00') ? <option value="Morning"  >Morning</option> : ""}
+               {!getTime('16:00:00') ? <option value="Afternoon">Afternoon</option> : ""}
+               {!getTime('23:00:00') ? <option value="Evening">Evening</option>: ""}
            
             </select>
           </span>
