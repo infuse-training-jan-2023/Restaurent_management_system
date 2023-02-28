@@ -96,6 +96,16 @@ body::-webkit-scrollbar {
 
   }
 
+  body{
+    width: fit-content;
+  }
+
+  .h1_div{
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0px;
+  }
+
   .custom_banner_css {
     background-image: url("./restaurant-banner.png");
     background-position: left -20px;
@@ -110,13 +120,21 @@ body::-webkit-scrollbar {
     background-color: #dcd4d6;
   }
 
+  .ant-drawer-body{
+    margin-left: 24vw !important;
+  }
+
+  .ant-drawer-header {
+    margin-left: 24vw !important;
+  }
+
+  .margin{
+    margin-left: 5vw;
+  }
   .custom_search_css {
     display: none;
   }
-  .custom_top_options {
-    display: none;
-  }
-
+  
   .custom_tablecss {
     margin: 0;
   }
@@ -145,5 +163,10 @@ body::-webkit-scrollbar {
 
   .custom_food_text{
     margin-right: -191px;
+  }
+
+  .table_div{
+    margin-right: auto;
+    margin-left: auto;
   }
 }

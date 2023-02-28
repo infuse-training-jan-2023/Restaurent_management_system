@@ -48,7 +48,6 @@ function CartItem({ item, onClick }) {
             defaultValue={quantity}
             onChange={(value) => {
               setQuntity(value);
-              // TODO:
               updateCart(value);
             }}
           />

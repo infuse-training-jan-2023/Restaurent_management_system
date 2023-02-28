@@ -37,7 +37,7 @@ const Menutab = () => {
       };
 
       axios
-        .post("http://localhost:8000/apicart", cartItem)
+        .post("http://localhost:8000/api/cart", cartItem)
         .then((res) => {
           console.log(res.data.data);
         })

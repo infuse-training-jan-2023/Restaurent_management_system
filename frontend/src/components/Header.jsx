@@ -274,13 +274,13 @@ const Header = () => {
                       <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
                         Product Details
                       </h3>
-                      <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
+                      <h3 className="font-semibold mr-2 ml-2 text-gray-600 text-xs uppercase w-1/5 text-center">
                         Quantity
                       </h3>
-                      <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
+                      <h3 className="font-semibold ml-4 text-gray-600 text-xs uppercase w-1/5 text-center">
                         Price
                       </h3>
-                      <h3 className="font-semibold text-gray-600 text-xs uppercase w-1/5 text-center">
+                      <h3 className="font-semibold   text-gray-600 text-xs uppercase w-1/5 text-center">
                         Total
                       </h3>
                     </div>
@@ -295,13 +295,13 @@ const Header = () => {
                   <div>
                     {cartsize > 0 ? (
                       <button
-                        className="bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        className="margin bg-teal-500 hover:bg-teal-400 text-white font-medium py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         onClick={showOrderStatus}
                       >
                         Checkout
                       </button>
                     ) : (
-                      <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+                      <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700 ">
                         No item in cart
                       </div>
                     )}

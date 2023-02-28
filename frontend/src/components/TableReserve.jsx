@@ -104,7 +104,7 @@ const ReserveTable = () => {
       }
     }
     return (
-      <div className="inline-block  px-2 w-84 ">
+      <div className="inline-block  px-2 w-84 table_div ">
         <div
           className={
             style +
