@@ -6,6 +6,8 @@ from routes.item_routes import router as item_router
 from routes.order_routes import router as order_router
 from routes.checkout_routes import router as checkout_router
 
+from mangum import Mangum
+
 app = FastAPI()
 origins = ['*']
 
@@ -17,9 +19,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    return {"message": "Hello World!"}
+
 app.include_router(cart_router, tags=["Cart"], prefix="/api/cart")
 app.include_router(checkout_router, tags=["Checkout"], prefix="/api/checkout")
 app.include_router(table_router, tags=["Tables"], prefix="/api/tables")
 app.include_router(item_router, tags=["Items"], prefix="/api/items")
 app.include_router(order_router, tags=["Orders"], prefix="/api/orders")
 
+handler = Mangum(app)

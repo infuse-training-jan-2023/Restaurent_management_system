@@ -31,7 +31,7 @@ const Header = () => {
 
   const createOrder = () => {
     axios
-      .delete(`http://localhost:8000/api/checkout/${user}`)
+      .delete(`https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/checkout/${user}`)
       .then((res) => {
         console.log(res.data.data.items);
       })
@@ -48,7 +48,7 @@ const Header = () => {
     setCartItems(modifiedData);
     setCartSize(modifiedData.length);
     axios
-      .delete(`http://localhost:8000/api/cart/${user}/${deleteItem.item_name}`)
+      .delete(`https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/cart/${user}/${deleteItem.item_name}`)
       .then((res) => {
         console.log(res.data.data.items);
       })
@@ -91,7 +91,7 @@ const Header = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:8000/api/cart/${user}`)
+        .get(`https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/cart/${user}`)
         .then((res) => {
           setCartItems(res.data.data.items);
           settotal(res.data.data.grand_total);

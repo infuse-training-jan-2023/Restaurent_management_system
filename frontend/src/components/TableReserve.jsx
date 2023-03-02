@@ -23,7 +23,7 @@ const ReserveTable = () => {
 
   const getdata = () => {
     axios
-      .get("http://localhost:8000/api/tables")
+      .get("https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/tables")
       .then((res) => {
         setReservationData(res.data.data);
       })
@@ -47,7 +47,7 @@ const ReserveTable = () => {
 
   const reserve_table = () => {
     axios
-      .post("http://localhost:8000/api/tables", reserveData)
+      .post("https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/tables", reserveData)
       .then((res) => {
         message.success("Table has been reserved successfully");
         show_modal();
@@ -180,7 +180,7 @@ const ReserveTable = () => {
   };
 
   const delete_reservation = () =>{
-    axios.put("http://localhost:8000/api/tables", deleteData)
+    axios.put("https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/tables", deleteData)
     .then((res)=>{
       message.success("Deleted reservation successfully");
       window.location.reload()

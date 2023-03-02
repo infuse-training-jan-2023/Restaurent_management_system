@@ -12,7 +12,7 @@ const OrderMsg = ({ onClick }) => {
   const [total, settotal] =useState('')
   useEffect(() => {
       axios
-        .get(`http://localhost:8000/api/cart/${user}`)
+        .get(`https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/cart/${user}`)
         .then((res) => {
           settotal(res.data.data.grand_total);
         })

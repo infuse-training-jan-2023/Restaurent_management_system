@@ -13,7 +13,7 @@ const Menutab = () => {
   const { user } = useContext(AuthContext);
 
   const fetchData = async () => {
-    axios.get("http://localhost:8000/api/items").then((res) => {
+    axios.get("https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/items").then((res) => {
       setFood(
         res.data.data.sort((a, b) => {
           if (a.price > b.price) return -1;
@@ -37,7 +37,7 @@ const Menutab = () => {
       };
 
       axios
-        .post("http://localhost:8000/api/cart", cartItem)
+        .post("https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/cart", cartItem)
         .then((res) => {
           console.log(res.data.data);
         })

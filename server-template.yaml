@@ -1,0 +1,128 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  StageName:
+    Default: dev
+    Type: String
+
+  HttpMethod:
+    Default: ANY
+    Type: String
+
+Resources:
+  RestaurantBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: restaurant-management-app
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+    DeletionPolicy: Retain
+
+  RestaurantBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource: !Join 
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref RestaurantBucket
+                - /*
+      Bucket: !Ref RestaurantBucket
+
+  RestaurantLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: restaurant-lambda-execution-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+
+  RestaurantLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.handler
+      Runtime: python3.9
+      CodeUri: lib.zip
+      Role: !GetAtt RestaurantLambdaExecutionRole.Arn
+
+  RestaurantApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: restaurant-management-api
+
+  RestaurantRootMethod:
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      HttpMethod: !Ref HttpMethod
+      ResourceId: !GetAtt RestaurantApiGateway.RootResourceId
+      RestApiId: !Ref RestaurantApiGateway
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub
+          - >-
+           arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFuncNameArn}/invocations
+          - LambdaFuncNameArn: !GetAtt RestaurantLambdaFunction.Arn
+
+  RestaurantOrdersResource:
+    Type: AWS::ApiGateway::Resource
+    DependsOn: RestaurantRootMethod
+    Properties:
+      ParentId: !GetAtt RestaurantApiGateway.RootResourceId
+      RestApiId: !Ref RestaurantApiGateway
+      PathPart: "{proxy+}"
+
+  RestaurantOrdersMethod:
+    Type: AWS::ApiGateway::Method
+    DependsOn: RestaurantOrdersResource
+    Properties:
+      RestApiId: !Ref RestaurantApiGateway
+      ResourceId: !Ref RestaurantOrdersResource
+      HttpMethod: !Ref HttpMethod
+      AuthorizationType: NONE
+      RequestParameters:
+        method.request.path.orderId: true
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub
+          - >-
+           arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFuncNameArn}/invocations
+          - LambdaFuncNameArn: !GetAtt RestaurantLambdaFunction.Arn
+
+  RestaurantDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: 
+      - RestaurantOrdersMethod
+    Properties:
+      RestApiId: !Ref RestaurantApiGateway
+      StageName: !Ref StageName
+
+  RestaurantLambdaPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+      - RestaurantDeployment
+    Properties:
+      FunctionName: !GetAtt RestaurantLambdaFunction.Arn
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RestaurantApiGateway}/*/*/*
+
+Outputs:
+  ApiEndpointURL:
+    Description: URL of the restaurant management API endpoint
+    Value: !Sub "https://${RestaurantApiGateway}.execute-api.${AWS::Region}.amazonaws.com/${StageName}/"

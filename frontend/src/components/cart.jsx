@@ -23,7 +23,7 @@ function CartItem({ item, onClick }) {
     };
 
     axios
-      .post("http://localhost:8000/api/cart", cartItem)
+      .post("https://kmynmmc7kh.execute-api.ap-south-1.amazonaws.com/fastapi/api/cart", cartItem)
       .then((res) => {
         console.log(res.data);
       })
