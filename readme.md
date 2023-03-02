@@ -1,6 +1,6 @@
 # Deploy backend
 
-1. aws cloudformation package --template .\server-template.yaml --s3-bucket deploy-frontend --output-template-file packaged-template.yaml
+1. aws cloudformation package --template .\template.yaml --s3-bucket deploy-frontend --output-template-file packaged-template.yaml
 2. aws cloudformation deploy --template-file C:\Users\dines\OneDrive\Desktop\infuse\git\Restaurent_management_system\packaged-template.yaml --stack-name fastapi-server-deploy --capabilities CAPABILITY_NAMED_IAM
 
 # Deploy frontend
